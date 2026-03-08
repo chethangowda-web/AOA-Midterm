@@ -1,0 +1,2963 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AOA by Chethan</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=JetBrains+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --bg2: #13161e;
+    --bg3: #1a1e2a;
+    --card: #1e2233;
+    --border: #2a2f42;
+    --amber: #f5a623;
+    --amber2: #ffd166;
+    --green: #06d6a0;
+    --red: #ef476f;
+    --blue: #118ab2;
+    --purple: #7b5ea7;
+    --text: #e8e6df;
+    --muted: #8b8fa8;
+    --code-bg: #0a0c10;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Lora', Georgia, serif;
+    display: flex;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── SIDEBAR ── */
+  #sidebar {
+    width: 280px;
+    min-width: 280px;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    padding: 0;
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 100;
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar-header {
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, #1a1e2a 0%, #0f1219 100%);
+  }
+
+  .sidebar-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--amber);
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+  }
+
+  .sidebar-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 4px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .nav-section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 18px 20px 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 13.5px;
+    color: var(--muted);
+    border-left: 3px solid transparent;
+    font-family: 'Lora', serif;
+  }
+
+  .nav-item:hover {
+    background: var(--bg3);
+    color: var(--text);
+    border-left-color: var(--border);
+  }
+
+  .nav-item.active {
+    background: rgba(245, 166, 35, 0.08);
+    color: var(--amber);
+    border-left-color: var(--amber);
+    font-weight: 600;
+  }
+
+  .nav-icon { font-size: 14px; width: 18px; text-align: center; }
+
+  .exam-badge {
+    background: linear-gradient(135deg, var(--red), #c62a47);
+    color: #fff;
+    font-size: 9px;
+    padding: 2px 7px;
+    border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.5px;
+    margin-left: auto;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  /* ── MAIN ── */
+  #main {
+    margin-left: 280px;
+    flex: 1;
+    min-height: 100vh;
+  }
+
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── HOME PAGE ── */
+  .home-hero {
+    background: linear-gradient(135deg, #0d0f14 0%, #13161e 40%, #1a1530 100%);
+    padding: 80px 60px 60px;
+    position: relative;
+    overflow: hidden;
+    min-height: 340px;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .home-hero::before {
+    content: 'O(n²)';
+    position: absolute;
+    top: -20px; right: 60px;
+    font-family: 'Playfair Display', serif;
+    font-size: 160px;
+    font-weight: 900;
+    color: rgba(245,166,35,0.04);
+    pointer-events: none;
+    line-height: 1;
+  }
+
+  .home-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--amber), transparent);
+  }
+
+  .hero-content h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 900;
+    line-height: 1.1;
+    color: #fff;
+    max-width: 600px;
+  }
+
+  .hero-content h1 span { color: var(--amber); }
+
+  .hero-content p {
+    margin-top: 16px;
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 500px;
+    line-height: 1.7;
+  }
+
+  .hero-pills {
+    display: flex;
+    gap: 10px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+
+  .pill {
+    background: rgba(245,166,35,0.1);
+    border: 1px solid rgba(245,166,35,0.25);
+    color: var(--amber2);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+  }
+
+  .pill.green {
+    background: rgba(6,214,160,0.08);
+    border-color: rgba(6,214,160,0.2);
+    color: var(--green);
+  }
+
+  .pill.red {
+    background: rgba(239,71,111,0.08);
+    border-color: rgba(239,71,111,0.2);
+    color: var(--red);
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stat-card {
+    background: var(--bg2);
+    padding: 28px 30px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 40px;
+    font-weight: 900;
+    color: var(--amber);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    margin-top: 6px;
+    text-transform: uppercase;
+  }
+
+  .quick-nav {
+    padding: 50px 60px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .section-sub {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 30px;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .topic-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .topic-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--amber);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .topic-card:hover {
+    border-color: rgba(245,166,35,0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+
+  .topic-card:hover::before { opacity: 1; }
+
+  .topic-card.mod2::before { background: var(--blue); }
+  .topic-card.mod2:hover { border-color: rgba(17,138,178,0.3); }
+
+  .topic-card.exam::before { background: var(--red); }
+  .topic-card.exam:hover { border-color: rgba(239,71,111,0.3); }
+
+  .card-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .card-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .card-tags {
+    display: flex;
+    gap: 6px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    background: var(--bg3);
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+  }
+
+  /* ── CONTENT PAGES ── */
+  .content-header {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 40px 60px 30px;
+  }
+
+  .breadcrumb {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+  }
+
+  .breadcrumb span { color: var(--amber); }
+
+  .content-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.1;
+  }
+
+  .content-body {
+    padding: 50px 60px;
+    max-width: 1000px;
+  }
+
+  /* ── TOPIC SECTION ── */
+  .topic-section {
+    margin-bottom: 60px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 60px;
+  }
+
+  .topic-section:last-child {
+    border-bottom: none;
+  }
+
+  .topic-h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--amber);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .topic-h2 .num {
+    background: rgba(245,166,35,0.12);
+    border: 1px solid rgba(245,166,35,0.25);
+    color: var(--amber);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  .topic-h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 30px 0 10px;
+  }
+
+  .explanation {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 14px 0;
+    font-size: 14.5px;
+    line-height: 1.8;
+    color: var(--text);
+  }
+
+  .explanation p { margin-bottom: 8px; }
+  .explanation p:last-child { margin-bottom: 0; }
+
+  /* ── QUICK REVISION BOX ── */
+  .revision-box {
+    background: linear-gradient(135deg, rgba(245,166,35,0.06), rgba(245,166,35,0.02));
+    border: 1px solid rgba(245,166,35,0.2);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 16px 0;
+  }
+
+  .revision-box-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .revision-box-title::before {
+    content: '⚡';
+    font-size: 12px;
+  }
+
+  .revision-box ul {
+    list-style: none;
+    font-size: 13.5px;
+    line-height: 1.9;
+  }
+
+  .revision-box ul li::before {
+    content: '→ ';
+    color: var(--amber);
+    font-weight: bold;
+  }
+
+  /* ── EXAM POINTS ── */
+  .exam-box {
+    background: rgba(239,71,111,0.05);
+    border: 1px solid rgba(239,71,111,0.2);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 16px 0;
+  }
+
+  .exam-box-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .exam-box-title::before { content: '🎯'; font-size: 12px; }
+
+  .exam-box ul {
+    list-style: none;
+    font-size: 13.5px;
+    line-height: 1.9;
+  }
+
+  .exam-box ul li::before {
+    content: '★ ';
+    color: var(--red);
+  }
+
+  /* ── CODE BLOCKS ── */
+  .code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 16px 0;
+  }
+
+  .code-header {
+    background: #111520;
+    padding: 10px 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .code-header::before {
+    content: '';
+    width: 8px; height: 8px;
+    background: var(--amber);
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .code-block pre {
+    padding: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #b8c4e0;
+    overflow-x: auto;
+  }
+
+  .code-block pre .kw { color: var(--amber); font-weight: 600; }
+  .code-block pre .fn { color: #66d9e8; }
+  .code-block pre .cm { color: #4a5270; font-style: italic; }
+  .code-block pre .nu { color: var(--green); }
+  .code-block pre .st { color: #f1c0e8; }
+
+  /* ── COMPLEXITY TABLE ── */
+  .complexity-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13.5px;
+  }
+
+  .complexity-table th {
+    background: var(--bg3);
+    padding: 12px 16px;
+    text-align: left;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+
+  .complexity-table td {
+    padding: 11px 16px;
+    border: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    background: var(--card);
+    color: var(--text);
+  }
+
+  .complexity-table tr:hover td { background: var(--bg3); }
+
+  .tc-best { color: var(--green); }
+  .tc-avg { color: var(--amber); }
+  .tc-worst { color: var(--red); }
+
+  /* ── FORMULA BOX ── */
+  .formula-box {
+    background: rgba(17,138,178,0.06);
+    border: 1px solid rgba(17,138,178,0.2);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 14px 0;
+  }
+
+  .formula-box-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--blue);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .formula {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    color: var(--amber2);
+    padding: 8px 0;
+    line-height: 1.8;
+  }
+
+  /* ── Q&A SECTIONS ── */
+  .qa-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 12px 0;
+  }
+
+  .qa-q {
+    padding: 16px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    transition: background 0.2s;
+  }
+
+  .qa-q:hover { background: var(--bg3); }
+
+  .q-num {
+    background: var(--bg3);
+    color: var(--amber);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    min-width: 28px;
+    text-align: center;
+    border: 1px solid rgba(245,166,35,0.2);
+    margin-top: 1px;
+  }
+
+  .q-num.mark4 {
+    color: var(--blue);
+    border-color: rgba(17,138,178,0.2);
+    background: rgba(17,138,178,0.05);
+  }
+
+  .qa-a {
+    padding: 0 20px 0 52px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s;
+    font-size: 13.5px;
+    line-height: 1.8;
+    color: var(--muted);
+    border-top: 0px solid var(--border);
+  }
+
+  .qa-a.open {
+    max-height: 3000px;
+    padding: 14px 20px 16px 52px;
+    border-top: 1px solid var(--border);
+  }
+  .qa-a ul { padding-left: 18px; margin: 8px 0; }
+  .qa-a ul li { margin-bottom: 5px; font-size: 13.5px; line-height: 1.75; }
+  .qa-a p { margin-bottom: 8px; }
+  .qa-a strong { color: var(--amber2); }
+  .qa-a .sub-head { color: var(--green); font-weight: 700; margin-top: 10px; display: block; font-size: 14px; }
+  .mark10-badge {
+    background: linear-gradient(135deg, #7b5ea7, #5a3f8a);
+    color: #fff;
+    font-size: 9px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.5px;
+    margin-left: auto;
+  }
+  .q-num.mark10 {
+    color: #c4aee8;
+    border-color: rgba(123,94,167,0.3);
+    background: rgba(123,94,167,0.08);
+  }
+
+  /* ── HOT QUESTION ── */
+  .hot-q {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 10px 0;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .hot-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: rgba(245,166,35,0.25);
+    line-height: 1;
+    min-width: 32px;
+  }
+
+  .hot-content { flex: 1; }
+
+  .hot-q-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+    line-height: 1.5;
+  }
+
+  .hot-meta {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .hot-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid;
+  }
+
+  .hot-tag.m1 {
+    color: var(--amber);
+    border-color: rgba(245,166,35,0.3);
+    background: rgba(245,166,35,0.06);
+  }
+
+  .hot-tag.m2 {
+    color: var(--blue);
+    border-color: rgba(17,138,178,0.3);
+    background: rgba(17,138,178,0.06);
+  }
+
+  .hot-tag.marks {
+    color: var(--green);
+    border-color: rgba(6,214,160,0.3);
+    background: rgba(6,214,160,0.06);
+  }
+
+  .fire { font-size: 14px; }
+
+  /* ── TABS ── */
+  .tabs {
+    display: flex;
+    gap: 2px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 30px;
+    overflow-x: auto;
+  }
+
+  .tab-btn {
+    padding: 12px 24px;
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: 'Lora', serif;
+    font-size: 14px;
+    transition: all 0.2s;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+  }
+
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active {
+    color: var(--amber);
+    border-bottom-color: var(--amber);
+  }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* ── MISC ── */
+  .highlight { color: var(--amber); font-weight: 600; }
+  .green-text { color: var(--green); }
+  .red-text { color: var(--red); }
+  .blue-text { color: var(--blue); }
+  .code-inline {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: var(--amber2);
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 30px 0;
+  }
+
+  /* ── MOBILE TOGGLE ── */
+  .menu-toggle {
+    display: none;
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 200;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--amber);
+    padding: 10px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 18px;
+  }
+
+  @media (max-width: 900px) {
+    .menu-toggle { display: flex; }
+    #sidebar {
+      transform: translateX(-100%);
+    }
+    #sidebar.open {
+      transform: translateX(0);
+    }
+    #main {
+      margin-left: 0;
+    }
+    .home-hero, .content-header, .content-body, .quick-nav { padding-left: 24px; padding-right: 24px; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .hero-content h1 { font-size: 34px; }
+    .content-title { font-size: 28px; }
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+  .warn-box {
+    background: rgba(123,94,167,0.08);
+    border: 1px solid rgba(123,94,167,0.25);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 12px 0;
+    font-size: 13.5px;
+    color: #c4aee8;
+    line-height: 1.7;
+  }
+
+  .warn-box strong { color: #b094e0; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 16px 0;
+  }
+
+  @media (max-width: 700px) {
+    .two-col { grid-template-columns: 1fr; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">AOA by<br>Chethan 🎓</div>
+    <div class="sidebar-sub">2nd Year BTech CSE · Midterm</div>
+  </div>
+
+  <div class="nav-section-label">Home</div>
+  <div class="nav-item active" onclick="showPage('home')">
+    <span class="nav-icon">🏠</span> Dashboard
+  </div>
+
+  <div class="nav-section-label">Module 1</div>
+  <div class="nav-item" onclick="showPage('algo-basics')">
+    <span class="nav-icon">📐</span> Algorithm Basics
+  </div>
+  <div class="nav-item" onclick="showPage('asymptotic')">
+    <span class="nav-icon">∞</span> Asymptotic Notations
+  </div>
+  <div class="nav-item" onclick="showPage('brute-force')">
+    <span class="nav-icon">💪</span> Brute Force Algorithms
+  </div>
+  <div class="nav-item" onclick="showPage('exhaustive')">
+    <span class="nav-icon">🗺️</span> Exhaustive Search
+  </div>
+
+  <div class="nav-section-label">Module 2</div>
+  <div class="nav-item" onclick="showPage('divide-conquer')">
+    <span class="nav-icon">⚔️</span> Divide and Conquer
+  </div>
+  <div class="nav-item" onclick="showPage('masters-theorem')">
+    <span class="nav-icon">📏</span> Master's Theorem
+  </div>
+  <div class="nav-item" onclick="showPage('sorting')">
+    <span class="nav-icon">🔃</span> Sorting Algorithms
+  </div>
+  <div class="nav-item" onclick="showPage('decrease-conquer')">
+    <span class="nav-icon">📉</span> Decrease and Conquer
+  </div>
+
+  <div class="nav-section-label">Exam Booster</div>
+  <div class="nav-item" onclick="showPage('q2mark')">
+    <span class="nav-icon">✏️</span> 2-Mark Q&amp;A
+    <span class="exam-badge">HOT</span>
+  </div>
+  <div class="nav-item" onclick="showPage('q4mark')">
+    <span class="nav-icon">📝</span> 4-Mark Questions
+  </div>
+  <div class="nav-item" onclick="showPage('q10mark')">
+    <span class="nav-icon">📜</span> 10-Mark Questions
+    <span class="exam-badge">NEW</span>
+  </div>
+  <div class="nav-item" onclick="showPage('repeated')">
+    <span class="nav-icon">🔥</span> Most Repeated
+    <span class="exam-badge">🔥</span>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main id="main">
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- HOME PAGE -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="page active" id="page-home">
+  <div class="home-hero">
+    <div class="hero-content">
+      <h1>AOA by <span>Chethan</span> — Score <span>45+</span>.</h1>
+      <p>Everything you need to revise Analysis of Algorithms in 2–3 hours. Clear explanations, pseudocode, formulas, and guaranteed exam questions.</p>
+      <div class="hero-pills">
+        <div class="pill">Module 1 &amp; 2 Complete</div>
+        <div class="pill green">2-Mark, 4-Mark &amp; 10-Mark Q&amp;A</div>
+        <div class="pill red">🔥 15 Most Repeated Questions</div>
+      </div>
+    </div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Topics Covered</div></div>
+    <div class="stat-card"><div class="stat-num">120+</div><div class="stat-label">Exam Questions</div></div>
+    <div class="stat-card"><div class="stat-num">15</div><div class="stat-label">Most Repeated</div></div>
+    <div class="stat-card"><div class="stat-num">2–3h</div><div class="stat-label">Full Revision</div></div>
+  </div>
+
+  <div class="quick-nav">
+    <div class="section-title">📚 Module 1 Topics</div>
+    <div class="section-sub">Start here — covers ~60% of typical exam marks.</div>
+    <div class="card-grid">
+      <div class="topic-card" onclick="showPage('algo-basics')">
+        <div class="card-label">Module 1 · Topic 1</div>
+        <div class="card-title">Algorithm Basics</div>
+        <div class="card-desc">Notion, importance, problem types, efficiency, order of growth, and basic efficiency classes.</div>
+        <div class="card-tags"><span class="tag">O(n)</span><span class="tag">Growth</span><span class="tag">Efficiency</span></div>
+      </div>
+      <div class="topic-card" onclick="showPage('asymptotic')">
+        <div class="card-label">Module 1 · Topic 2</div>
+        <div class="card-title">Asymptotic Notations</div>
+        <div class="card-desc">Big-O, Theta, Omega — definitions, properties, and how to use them in analysis.</div>
+        <div class="card-tags"><span class="tag">Big-O</span><span class="tag">Θ(n)</span><span class="tag">Ω(n)</span></div>
+      </div>
+      <div class="topic-card" onclick="showPage('brute-force')">
+        <div class="card-label">Module 1 · Topic 3</div>
+        <div class="card-title">Brute Force Algorithms</div>
+        <div class="card-desc">Bubble Sort, Selection Sort, Linear Search, and Brute Force String Matching with pseudocode.</div>
+        <div class="card-tags"><span class="tag">O(n²)</span><span class="tag">Sorting</span><span class="tag">Search</span></div>
+      </div>
+      <div class="topic-card" onclick="showPage('exhaustive')">
+        <div class="card-label">Module 1 · Topic 4</div>
+        <div class="card-title">Exhaustive Search</div>
+        <div class="card-desc">Travelling Salesperson Problem and 0/1 Knapsack — brute-force enumeration approaches.</div>
+        <div class="card-tags"><span class="tag">TSP</span><span class="tag">Knapsack</span><span class="tag">NP</span></div>
+      </div>
+    </div>
+
+    <br>
+    <div class="section-title">⚔️ Module 2 Topics</div>
+    <div class="section-sub">Divide, Decrease, and Conquer strategies — most asked in exams!</div>
+    <div class="card-grid">
+      <div class="topic-card mod2" onclick="showPage('divide-conquer')">
+        <div class="card-label">Module 2 · Topic 1</div>
+        <div class="card-title">Divide and Conquer</div>
+        <div class="card-desc">General method, recursion trees, Binary Search, Merge Sort, Quick Sort.</div>
+        <div class="card-tags"><span class="tag">Binary Search</span><span class="tag">Merge Sort</span><span class="tag">O(n log n)</span></div>
+      </div>
+      <div class="topic-card mod2" onclick="showPage('masters-theorem')">
+        <div class="card-label">Module 2 · Topic 2</div>
+        <div class="card-title">Master's Theorem</div>
+        <div class="card-desc">The single most important formula for solving divide-and-conquer recurrences. 3 cases.</div>
+        <div class="card-tags"><span class="tag">Recurrence</span><span class="tag">3 Cases</span><span class="tag">Must Know</span></div>
+      </div>
+      <div class="topic-card mod2" onclick="showPage('sorting')">
+        <div class="card-label">Module 2 · Topic 3</div>
+        <div class="card-title">Sorting Algorithms</div>
+        <div class="card-desc">Merge Sort and Quick Sort — full pseudocode, complexity analysis, and comparisons.</div>
+        <div class="card-tags"><span class="tag">Quick Sort</span><span class="tag">Merge Sort</span><span class="tag">Pivot</span></div>
+      </div>
+      <div class="topic-card mod2" onclick="showPage('decrease-conquer')">
+        <div class="card-label">Module 2 · Topic 4</div>
+        <div class="card-title">Decrease and Conquer</div>
+        <div class="card-desc">Insertion Sort and Topological Sorting — reduce problem size by one each step.</div>
+        <div class="card-tags"><span class="tag">Insertion Sort</span><span class="tag">Topological</span><span class="tag">DAG</span></div>
+      </div>
+    </div>
+
+    <br>
+    <div class="section-title">🔥 Exam Booster</div>
+    <div class="section-sub">Go here 1 hour before your exam.</div>
+    <div class="card-grid">
+      <div class="topic-card exam" onclick="showPage('q2mark')">
+        <div class="card-label">Exam Prep</div>
+        <div class="card-title">2-Mark Questions</div>
+        <div class="card-desc">60 important 2-mark questions organized by topic with full answers. Quick revision!</div>
+        <div class="card-tags"><span class="tag">All Topics</span><span class="tag">60 Q&amp;A</span></div>
+      </div>
+      <div class="topic-card exam" onclick="showPage('q4mark')">
+        <div class="card-label">Exam Prep</div>
+        <div class="card-title">4-Mark Questions</div>
+        <div class="card-desc">10 detailed 4-mark questions with hints and key points for answers.</div>
+        <div class="card-tags"><span class="tag">All Topics</span><span class="tag">Detailed Answers</span></div>
+      </div>
+      <div class="topic-card exam" onclick="showPage('q10mark')">
+        <div class="card-label">Exam Prep · NEW</div>
+        <div class="card-title">10-Mark Questions</div>
+        <div class="card-desc">11 full essay-style 10-mark answers with step-by-step explanations, traces, and analysis.</div>
+        <div class="card-tags"><span class="tag">Full Answers</span><span class="tag">Essay Style</span></div>
+      </div>
+      <div class="topic-card exam" onclick="showPage('repeated')">
+        <div class="card-label">🔥 Must Read</div>
+        <div class="card-title">15 Most Repeated</div>
+        <div class="card-desc">If you only have 30 minutes, study these 15 questions. Highest probability in exams.</div>
+        <div class="card-tags"><span class="tag">High Probability</span><span class="tag">All Modules</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- MODULE 1 — ALGORITHM BASICS -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="page" id="page-algo-basics">
+  <div class="content-header">
+    <div class="breadcrumb">Home → Module 1 → <span>Algorithm Basics</span></div>
+    <div class="content-title">Algorithm Basics</div>
+  </div>
+  <div class="content-body">
+
+    <!-- NOTION -->
+    <div class="topic-section">
+      <div class="topic-h2"><span class="num">1.1</span> Notion of an Algorithm</div>
+      <div class="explanation">
+        <p>An <strong>algorithm</strong> is a finite sequence of well-defined instructions to solve a problem in a finite amount of time. It takes input, processes it, and produces output.</p>
+        <p>Five key properties: <span class="highlight">Input, Output, Definiteness, Finiteness, Effectiveness.</span></p>
+        <p>Think of it as a recipe — step-by-step instructions with a clear start and end.</p>
+      </div>
+
+      <div class="revision-box">
+        <div class="revision-box-title">⚡ 30-Second Revision</div>
+        <ul>
+          <li>Algorithm = Finite + Definite + Effective steps</li>
+          <li>Must terminate (finiteness is crucial!)</li>
+          <li>Each step must be unambiguous (definiteness)</li>
+          <li>Correctness must be provable</li>
+        </ul>
+      </div>
+
+      <div class="exam-box">
+        <div class="exam-box-title">🎯 Frequently Asked by Examiners</div>
+        <ul>
+          <li>Define algorithm and list its 5 properties (2-mark)</li>
+          <li>Difference between algorithm and program</li>
+          <li>Why finiteness is essential in an algorithm</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- PROBLEM TYPES -->
+    <div class="topic-section">
+      <div class="topic-h2"><span class="num">1.2</span> Important Problem Types</div>
+      <div class="explanation">
+        <p>Six major problem types exist in algorithms:</p>
+        <p><span class="highlight">1. Sorting</span> — Arrange elements in order<br>
+        <span class="highlight">2. Searching</span> — Find an element in a data structure<br>
+        <span class="highlight">3. String Processing</span> — Pattern matching in text<br>
+        <span class="highlight">4. Graph Problems</span> — Traversal, shortest path, spanning tree<br>
+        <span class="highlight">5. Combinatorial Problems</span> — Find combinations/permutations (TSP, Knapsack)<br>
+        <span class="highlight">6. Geometric Problems</span> — Convex hull, closest pair of points</p>
+      </div>
+      <div class="revision-box">
+        <div class="revision-box-title">⚡ 30-Second Revision</div>
+        <ul>
+          <li>Mnemonic: <strong>S-S-S-G-C-G</strong> (Sorting, Searching, String, Graph, Combinatorial, Geometric)</li>
+          <li>Combinatorial problems are the hardest (exponential in worst case)</li>
+          <li>TSP and Knapsack are classic combinatorial problems</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ORDER OF GROWTH -->
+    <div class="topic-section">
+      <div class="topic-h2"><span class="num">1.3</span> Order of Growth &amp; Efficiency Classes</div>
+      <div class="explanation">
+        <p>Order of growth describes how an algorithm's running time increases as input size <strong>n</strong> grows. We ignore constants and lower-order terms.</p>
+        <p>Two algorithms both taking <em>5n² + 3n + 7</em> steps — the dominant term is <strong>n²</strong>, so growth is quadratic.</p>
+      </div>
+
+      <div class="formula-box">
+        <div class="formula-box-title">📐 Efficiency Classes (Slowest → Fastest)</div>
+        <div class="formula">
+          O(1) &lt; O(log n) &lt; O(n) &lt; O(n log n) &lt; O(n²) &lt; O(n³) &lt; O(2ⁿ) &lt; O(n!)
+        </div>
+      </div>
+
+      <table class="complexity-table">
+        <tr><th>Class</th><th>Name</th><th>Example Algorithm</th></tr>
+        <tr><td class="tc-best">O(1)</td><td>Constant</td><td>Array access</td></tr>
+        <tr><td class="tc-best">O(log n)</td><td>Logarithmic</td><td>Binary Search</td></tr>
+        <tr><td class="tc-best">O(n)</td><td>Linear</td><td>Linear Search</td></tr>
+        <tr><td class="tc-avg">O(n log n)</td><td>Linearithmic</td><td>Merge Sort</td></tr>
+        <tr><td class="tc-avg">O(n²)</td><td>Quadratic</td><td>Bubble Sort, Selection Sort</td></tr>
+        <tr><td class="tc-worst">O(2ⁿ)</td><td>Exponential</td><td>Exhaustive Search</td></tr>
+        <tr><td class="tc-worst">O(n!)</td><td>Factorial</td><td>Brute Force TSP</td></tr>
+      </table>
+
+      <div class="exam-box">
+        <div class="exam-box-title">🎯 Frequently Asked by Examiners</div>
+        <ul>
+          <li>List basic efficiency classes in increasing order of growth</li>
+          <li>Which is better: O(n log n) or O(n²) and why?</li>
+          <li>Give example of O(1), O(log n), and O(n!) algorithms</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- MATHEMATICAL ANALYSIS -->
+    <div class="topic-section">
+      <div class="topic-h2"><span class="num">1.4</span> Analysis of Non-Recursive Algorithms</div>
+      <div class="explanation">
+        <p>To analyze a non-recursive algorithm: identify the <strong>basic operation</strong> (the most frequently executed operation), set up a <strong>sum</strong>, and solve it.</p>
+        <p>Steps: (1) Decide input size measure, (2) Identify basic operation, (3) Check if cost varies for same n, (4) Set up sum, (5) Find closed form.</p>
+      </div>
+
+      <div class="formula-box">
+        <div class="formula-box-title">📐 Key Summation Formulas</div>
+        <div class="formula">
+          Σ(i=1 to n) 1 = n<br>
+          Σ(i=1 to n) i = n(n+1)/2<br>
+          Σ(i=0 to n) 2ⁱ = 2ⁿ⁺¹ - 1<br>
+          Σ(i=1 to n) i² = n(n+1)(2n+1)/6
+        </div>
+      </div>
+
+      <div class="topic-h3">Example: Selection Sort Analysis</div>
+      <div class="code-block">
+        <div class="code-header">Non-Recursive Analysis — Selection Sort</div>
+        <pre><span class="cm">// Basic operation: comparison A[j] < A[min]</span>
+<span class="kw">for</span> i = 0 <span class="kw">to</span> n-2  <span class="cm">// outer loop runs n-1 times</span>
+    <span class="kw">for</span> j = i+1 <span class="kw">to</span> n-1  <span class="cm">// inner loop</span>
+        comparison  <span class="cm">// basic operation</span>
+
+<span class="cm">// Count = Σ(i=0 to n-2) Σ(j=i+1 to n-1) 1</span>
+<span class="cm">//       = Σ(i=0 to n-2) (n-1-i)</span>
+<span class="cm">//       = n(n-1)/2</span>
+<span class="cm">//       ∈ Θ(n²)</span></pre>
+      </div>
+
+    </div>
+
+    <!-- RECURSIVE ANALYSIS -->
+    <div class="topic-section">
+      <div class="topic-h2"><span class="num">1.5</span> Analysis of Recursive Algorithms</div>
+      <div class="explanation">
+        <p>For recursive algorithms, set up a <strong>recurrence relation</strong> — an equation that expresses T(n) in terms of T of a smaller input. Then solve using backward substitution or Master's Theorem.</p>
+      </div>
+
+      <div class="formula-box">
+        <div class="formula-box-title">📐 Factorial Recurrence Example</div>
+        <div class="formula">
+          T(n) = T(n-1) + 1,  T(0) = 0<br>
+          By backward substitution:<br>
+          T(n) = T(n-1)+1 = T(n-2)+2 = ... = T(0)+n = n<br>
+          ∴ T(n) ∈ O(n)
+        </div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">Recursive Algorithm Analysis — Factorial</div>
+        <pre><span class="fn">Factorial</span>(n):
+    <span class="kw">if</span> n == <span class="nu">0</span>:
+        <span class="kw">return</span> <span class="nu">1</span>
+    <span class="kw">else</span>:
+        <span class="kw">return</span> n * <span class="fn">Factorial</span>(n-1)
+
+<span class="cm">// Recurrence: T(n) = T(n-1) + 1</span>
+<span class="cm">// Solution: T(n) = n  → O(n)</span></pre>
+      </div>
+
+      <div class="exam-box">
+        <div class="exam-box-title">🎯 Frequently Asked by Examiners</div>
+        <ul>
+          <li>Analyze time complexity of a given loop using summation</li>
+          <li>Set up and solve recurrence for factorial/fibonacci</li>
+          <li>What is the basic operation in binary search?</li>
+          <li>Distinguish between best, worst, and average case complexity</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- MODULE 1 — ASYMPTOTIC NOTATIONS -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="page" id="page-asymptotic">
+  <div class="content-header">
+    <div class="breadcrumb">Home → Module 1 → <span>Asymptotic Notations</span></div>
+    <div class="content-title">Asymptotic Notations</div>
+  </div>
+  <div class="content-body">
+
+    <div class="topic-section">
+      <div class="topic-h2"><span class="num">2.1</span> Big-O Notation — O(g(n))</div>
+      <div class="explanation">
+        <p><strong>Big-O</strong> gives the <span class="highlight">upper bound</span> (worst case). We say f(n) ∈ O(g(n)) if f(n) grows no faster than g(n) for large n.</p>
+        <p>Formally: f(n) ∈ O(g(n)) if ∃ positive constants c and n₀ such that f(n) ≤ c·g(n) for all n ≥ n₀.</p>
+        <p>Think: "f(n) is at most this bad."</p>
+      </div>
+
+      <div class="formula-box">
+        <div class="formula-box-title">📐 Big-O Definition</div>
+        <div class="formula">
+          f(n) ∈ O(g(n))  iff  ∃ c > 0, n₀ ≥ 0  such that<br>
+          f(n) ≤ c · g(n)  for all n ≥ n₀<br><br>
+          Example: 5n² + 3n ∈ O(n²)  [c=6, n₀=3]
+        </div>
+      </div>
+
+      <div class="revision-box">
+        <div class="revision-box-title">⚡ 30-Second Revision — Big-O</div>
+        <ul>
+          <li><strong>O = Upper Bound = Worst Case</strong></li>
+          <li>Drop constants and lower-order terms</li>
+          <li>5n² + 3n + 7 → O(n²)</li>
+          <li>If f(n) = n, then f(n) ∈ O(n²) is also valid (not tight, but valid)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="topic-section">
+      <div class="topic-h2"><span class="num">2.2</span> Omega Notation — Ω(g(n))</div>
+      <div class="explanation">
+        <p><strong>Omega</strong> gives the <span class="highlight">lower bound</span> (best case). f(n) ∈ Ω(g(n)) means f(n) grows at least as fast as g(n).</p>
+        <p>Formally: f(n) ∈ Ω(g(n)) if ∃ positive constants c and n₀ such that f(n) ≥ c·g(n) for all n ≥ n₀.</p>
+      </div>
+
+      <div class="formula-box">
+        <div class="formula-box-title">📐 Omega Definition</div>
+        <div class="formula">
+          f(n) ∈ Ω(g(n))  iff  ∃ c > 0, n₀ ≥ 0  such that<br>
+          f(n) ≥ c · g(n)  for all n ≥ n₀<br><br>
+          Example: 5n² + 3n ∈ Ω(n)  [c=5, n₀=1]
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-section">
+      <div class="topic-h2"><span class="num">2.3</span> Theta Notation — Θ(g(n))</div>
+      <div class="explanation">
+        <p><strong>Theta</strong> gives the <span class="highlight">tight bound</span> (exact order). f(n) ∈ Θ(g(n)) means f(n) grows exactly as fast as g(n) — it's both O and Ω.</p>
+        <p>Formally: f(n) ∈ Θ(g(n)) if ∃ positive constants c₁, c₂ and n₀ such that c₁·g(n) ≤ f(n) ≤ c₂·g(n) for all n ≥ n₀.</p>
+      </div>
+
+      <div class="formula-box">
+        <div class="formula-box-title">📐 Theta Definition</div>
+        <div class="formula">
+          f(n) ∈ Θ(g(n))  iff  ∃ c₁, c₂ > 0, n₀ ≥ 0  such that<br>
+          c₁·g(n) ≤ f(n) ≤ c₂·g(n)  for all n ≥ n₀<br><br>
+          Θ(g(n)) = O(g(n)) ∩ Ω(g(n))<br>
+          Example: 5n² + 3n ∈ Θ(n²)
+        </div>
+      </div>
+
+      <table class="complexity-table">
+        <tr><th>Notation</th><th>Meaning</th><th>Bound</th><th>Intuition</th></tr>
+        <tr><td class="highlight">O(g(n))</td><td>Big-O</td><td class="tc-worst">Upper</td><td>≤ this in worst case</td></tr>
+        <tr><td style="color:var(--green)">Ω(g(n))</td><td>Omega</td><td class="tc-best">Lower</td><td>≥ this in best case</td></tr>
+        <tr><td style="color:var(--blue)">Θ(g(n))</td><td>Theta</td><td class="tc-avg">Tight</td><td>Exactly this order</td></tr>
+      </table>
+
+      <div class="exam-box">
+        <div class="exam-box-title">🎯 Frequently Asked by Examiners</div>
+        <ul>
+          <li>Define Big-O, Omega, and Theta with formal mathematical definition</li>
+          <li>Prove that 3n² + 5n ∈ O(n²)</li>
+          <li>What is the difference between O and Θ notation?</li>
+          <li>If f(n) ∈ O(g(n)) and g(n) ∈ O(h(n)), prove f(n) ∈ O(h(n)) (transitivity)</li>
+          <li>Give the tightest bound for T(n) = 2n² + 6n log n + 7</li>
+        </ul>
+      </div>
+
+      <div class="warn-box">
+        <strong>⚠️ Common Mistake:</strong> Students confuse O (upper bound) with Θ (tight bound). O(n²) for Bubble Sort is technically correct, but Θ(n²) is more precise. Examiners expect Θ when asking for tight complexity.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- MODULE 1 — BRUTE FORCE -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="page" id="page-brute-force">
+  <div class="content-header">
+    <div class="breadcrumb">Home → Module 1 → <span>Brute Force Algorithms</span></div>
+    <div class="content-title">Brute Force Algorithms</div>
+  </div>
+  <div class="content-body">
+
+    <div class="topic-section">
+      <div class="topic-h2"><span class="num">3.1</span> Brute Force Technique</div>
+      <div class="explanation">
+        <p><strong>Brute Force</strong> is the most straightforward approach — try all possible solutions and pick the correct one. It's simple but usually inefficient.</p>
+        <p>Key idea: Apply the problem definition directly. No clever tricks, just raw computation.</p>
+        <p>Advantages: Simple to implement, always correct. Disadvantages: Very slow for large inputs.</p>
+      </div>
+      <div class="revision-box">
+        <div class="revision-box-title">⚡ 30-Second Revision</div>
+        <ul>
+          <li>Brute Force = Direct application of problem definition</li>
+          <li>Always correct, rarely efficient</li>
+          <li>Useful as baseline for comparing better algorithms</li>
+          <li>Examples: Bubble Sort, Selection Sort, Linear Search, String Matching</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- BUBBLE SORT -->
+    <div class="topic-section">
+      <div class="topic-h2"><span class="num">3.2</span> Bubble Sort</div>
+      <div class="explanation">
+        <p>Compare adjacent elements and swap if out of order. After each pass, the largest unsorted element "bubbles up" to its correct position.</p>
+        <p>After <em>i</em> passes, the last <em>i</em> elements are in their final position. Needs at most n-1 passes.</p>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">Pseudocode — Bubble Sort</div>
+        <pre><span class="fn">BubbleSort</span>(A[0..n-1]):
+    <span class="kw">for</span> i = 0 <span class="kw">to</span> n-2:
+        <span class="kw">for</span> j = 0 <span class="kw">to</span> n-2-i:
+            <span class="kw">if</span> A[j] > A[j+1]:
+                <span class="fn">swap</span>(A[j], A[j+1])
+
+<span class="cm">// Basic operation: comparison A[j] > A[j+1]</span>
+<span class="cm">// Count = Σ(i=0 to n-2) Σ(j=0 to n-2-i) 1 = n(n-1)/2</span>
+<span class="cm">// Time: Θ(n²) in all cases</span></pre>
+      </div>
+
+      <table class="complexity-table">
+        <tr><th>Case</th><th>Time</th><th>Space</th></tr>
+        <tr><td>Best</td><td class="tc-best">O(n) with flag optimization</td><td>O(1)</td></tr>
+        <tr><td>Average</td><td class="tc-avg">Θ(n²)</td><td>O(1)</td></tr>
+        <tr><td>Worst</td><td class="tc-worst">Θ(n²)</td><td>O(1)</td></tr>
+      </table>
+
+      <div class="exam-box">
+        <div class="exam-box-title">🎯 Key Exam Points</div>
+        <ul>
+          <li>Bubble Sort is <strong>stable</strong> (preserves relative order of equal elements)</li>
+          <li>Bubble Sort is <strong>in-place</strong> (O(1) auxiliary space)</li>
+          <li>With early termination flag: O(n) best case (already sorted)</li>
+          <li>Basic operation is the comparison, not the swap</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SELECTION SORT -->
+    <div class="topic-section">
+      <div class="topic-h2"><span class="num">3.3</span> Selection Sort</div>
+      <div class="explanation">
+        <p>Find the minimum element in the unsorted portion and place it at the beginning. Repeat for remaining elements.</p>
+        <p>Unlike Bubble Sort, the number of swaps is minimized — at most n-1 swaps regardless of input. Makes it better for memory write-heavy scenarios.</p>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">Pseudocode — Selection Sort</div>
+        <pre><span class="fn">SelectionSort</span>(A[0..n-1]):
+    <span class="kw">for</span> i = 0 <span class="kw">to</span> n-2:
+        min_idx = i
+        <span class="kw">for</span> j = i+1 <span class="kw">to</span> n-1:
+            <span class="kw">if</span> A[j] < A[min_idx]:
+                min_idx = j
+        <span class="fn">swap</span>(A[i], A[min_idx])
+
+<span class="cm">// Basic operation: comparison A[j] < A[min_idx]</span>
+<span class="cm">// Count = (n-1) + (n-2) + ... + 1 = n(n-1)/2</span>
+<span class="cm">// Time: Θ(n²) always (input doesn't matter)</span></pre>
+      </div>
+
+      <table class="complexity-table">
+        <tr><th>Case</th><th>Time</th><th>Swaps</th></tr>
+        <tr><td>All Cases</td><td class="tc-worst">Θ(n²)</td><td class="tc-best">O(n)</td></tr>
+      </table>
+
+      <div class="warn-box">
+        <strong>⚠️ Key Difference:</strong> Selection Sort has <strong>exactly n(n-1)/2 comparisons always</strong> — the input doesn't affect this count. Bubble Sort can be O(n) in best case with flag. Selection Sort is <strong>NOT stable</strong> but Bubble Sort IS stable.
+      </div>
+    </div>
+
+    <!-- LINEAR SEARCH -->
+    <div class="topic-section">
+      <div class="topic-h2"><span class="num">3.4</span> Linear Search</div>
+      <div class="explanation">
+        <p>Scan each element one by one until the target is found or the list ends. The simplest search algorithm.</p>
+        <p>No requirement for sorted data — works on any list. Best for unsorted small arrays.</p>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">Pseudocode — Linear Search</div>
+        <pre><span class="fn">LinearSearch</span>(A[0..n-1], key):
+    <span class="kw">for</span> i = 0 <span class="kw">to</span> n-1:
+        <span class="kw">if</span> A[i] == key:
+            <span class="kw">return</span> i
+    <span class="kw">return</span> -1  <span class="cm">// not found</span>
+
+<span class="cm">// Best case: key at A[0] → O(1)</span>
+<span class="cm">// Worst case: key at end or absent → O(n)</span>
+<span class="cm">// Average case: O(n/2) ≈ O(n)</span></pre>
+      </div>
+    </div>
+
+    <!-- STRING MATCHING -->
+    <div class="topic-section">
+      <div class="topic-h2"><span class="num">3.5</span> Brute Force String Matching</div>
+      <div class="explanation">
+        <p>Given text T of length n and pattern P of length m, check every possible position in T where P could start, and verify character by character.</p>
+        <p>Try alignment at position 0, 1, 2, ..., n-m. For each, compare all m characters. Stop when match found or all positions tried.</p>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">Pseudocode — Brute Force String Matching</div>
+        <pre><span class="fn">StringMatch</span>(T[0..n-1], P[0..m-1]):
+    <span class="kw">for</span> i = 0 <span class="kw">to</span> n-m:
+        j = 0
+        <span class="kw">while</span> j < m <span class="kw">and</span> T[i+j] == P[j]:
+            j = j + 1
+        <span class="kw">if</span> j == m:
+            <span class="kw">return</span> i  <span class="cm">// match at position i</span>
+    <span class="kw">return</span> -1
+
+<span class="cm">// Worst case: O(m × (n-m+1)) ≈ O(n·m)</span>
+<span class="cm">// Example: T = "aaaa...a", P = "aaa...ab"</span></pre>
+      </div>
+
+      <div class="formula-box">
+        <div class="formula-box-title">📐 Complexity Summary — Brute Force</div>
+        <div class="formula">
+          Bubble Sort:    Θ(n²) comparisons<br>
+          Selection Sort: Θ(n²) comparisons, O(n) swaps<br>
+          Linear Search:  O(n) worst, O(1) best<br>
+          String Match:   O(n·m) worst case
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- MODULE 1 — EXHAUSTIVE SEARCH -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="page" id="page-exhaustive">
+  <div class="content-header">
+    <div class="breadcrumb">Home → Module 1 → <span>Exhaustive Search</span></div>
+    <div class="content-title">Exhaustive Search</div>
+  </div>
+  <div class="content-body">
+
+    <div class="topic-section">
+      <div class="topic-h2"><span class="num">4.1</span> Exhaustive Search</div>
+      <div class="explanation">
+        <p><strong>Exhaustive Search</strong> (or generate-and-test) generates all candidate solutions and tests each for validity. Used for combinatorial problems where no better algorithm is known.</p>
+        <p>It is essentially brute force applied to combinatorial/optimization problems. Always finds the optimal solution, but at extreme cost for large inputs.</p>
+      </div>
+    </div>
+
+    <!-- TSP -->
+    <div class="topic-section">
+      <div class="topic-h2"><span class="num">4.2</span> Travelling Salesperson Problem (TSP)</div>
+      <div class="explanation">
+        <p>Given n cities and distances between them, find the shortest tour that visits each city <strong>exactly once</strong> and returns to the start city.</p>
+        <p>Brute force approach: Try all (n-1)! permutations of cities (fix one city), compute total distance, return the minimum. For 10 cities → 9! = 362,880 tours!</p>
+      </div>
+
+      <div class="formula-box">
+        <div class="formula-box-title">📐 TSP — Key Facts</div>
+        <div class="formula">
+          Number of tours (for n cities) = (n-1)! / 2<br>
+          (dividing by 2 removes reverse duplicates)<br><br>
+          n = 4 cities → (4-1)!/2 = 3 tours<br>
+          n = 10 cities → 9!/2 = 181,440 tours<br>
+          Brute Force Complexity: O(n!)
+        </div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">TSP Example — 4 Cities</div>
+        <pre><span class="cm">// Cities: 1, 2, 3, 4  (fix city 1 as start)</span>
+<span class="cm">// Possible tours starting and ending at 1:</span>
+Tour 1: 1 → 2 → 3 → 4 → 1  cost = d(1,2)+d(2,3)+d(3,4)+d(4,1)
+Tour 2: 1 → 2 → 4 → 3 → 1  cost = d(1,2)+d(2,4)+d(4,3)+d(3,1)
+Tour 3: 1 → 3 → 2 → 4 → 1  cost = d(1,3)+d(3,2)+d(2,4)+d(4,1)
+
+<span class="cm">// Return tour with minimum cost</span>
+<span class="cm">// Time: O(n!)  — impractical for n > 20</span></pre>
+      </div>
+
+      <div class="exam-box">
+        <div class="exam-box-title">🎯 Frequently Asked</div>
+        <ul>
+          <li>Define TSP and find optimal tour for a given 4-city matrix</li>
+          <li>Why is TSP NP-Hard? (no polynomial algorithm known)</li>
+          <li>What is the time complexity of brute-force TSP?</li>
+          <li>How many distinct tours exist for n cities?</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- KNAPSACK -->
+    <div class="topic-section">
+      <div class="topic-h2"><span class="num">4.3</span> Knapsack Problem (Exhaustive Search)</div>
+      <div class="explanation">
+        <p>Given n items each with a weight wᵢ and value vᵢ, and a knapsack of capacity W, select items to <strong>maximize total value</strong> without exceeding capacity W.</p>
+        <p>0/1 Knapsack: Each item is either taken (1) or not (0). Brute force: Enumerate all 2ⁿ subsets, compute total weight and value, keep feasible subset with max value.</p>
+      </div>
+
+      <div class="formula-box">
+        <div class="formula-box-title">📐 Knapsack — Key Facts</div>
+        <div class="formula">
+          Number of subsets for n items = 2ⁿ<br>
+          Brute Force Complexity: O(2ⁿ)<br><br>
+          Feasibility: Total weight ≤ W<br>
+          Objective: Maximize Σ vᵢ for selected items
+        </div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">Knapsack — Exhaustive Search Example</div>
+        <pre><span class="cm">// n=3 items: (w1=2,v1=3), (w2=3,v2=4), (w3=4,v3=5), W=5</span>
+Subset {} → weight=0, value=0
+Subset {1} → weight=2, value=3  ✓
+Subset {2} → weight=3, value=4  ✓
+Subset {3} → weight=4, value=5  ✓
+Subset {1,2} → weight=5, value=7  ✓ ← <span class="cm">MAX FEASIBLE</span>
+Subset {1,3} → weight=6, value=8  ✗ (exceeds W=5)
+Subset {2,3} → weight=7, value=9  ✗
+Subset {1,2,3} → weight=9, value=12  ✗
+
+<span class="cm">// Answer: Select items 1 and 2, value = 7</span></pre>
+      </div>
+
+      <div class="revision-box">
+        <div class="revision-box-title">⚡ 30-Second Revision — TSP vs Knapsack</div>
+        <ul>
+          <li><strong>TSP</strong>: Find minimum cost Hamiltonian cycle → O(n!)</li>
+          <li><strong>Knapsack</strong>: Maximize value within weight limit → O(2ⁿ) brute force</li>
+          <li>Both are NP-Hard optimization problems</li>
+          <li>Both require exhaustive enumeration in brute force approach</li>
+          <li>TSP: permutations | Knapsack: subsets</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- MODULE 2 — DIVIDE AND CONQUER -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="page" id="page-divide-conquer">
+  <div class="content-header">
+    <div class="breadcrumb">Home → Module 2 → <span>Divide and Conquer</span></div>
+    <div class="content-title">Divide and Conquer</div>
+  </div>
+  <div class="content-body">
+
+    <div class="topic-section">
+      <div class="topic-h2"><span class="num">5.1</span> General Method</div>
+      <div class="explanation">
+        <p>Divide and Conquer solves a problem by: <span class="highlight">(1) Divide</span> the problem into smaller subproblems, <span class="highlight">(2) Conquer</span> by solving subproblems recursively, <span class="highlight">(3) Combine</span> the solutions.</p>
+        <p>Subproblems are typically of the same type as the original. Works best when subproblems are independent and roughly equal in size.</p>
+      </div>
+
+      <div class="formula-box">
+        <div class="formula-box-title">📐 General Recurrence Equation</div>
+        <div class="formula">
+          T(n) = aT(n/b) + f(n)<br><br>
+          a = number of subproblems<br>
+          b = factor by which problem size reduces<br>
+          f(n) = cost of divide + combine steps
+        </div>
+      </div>
+    </div>
+
+    <!-- BINARY SEARCH -->
+    <div class="topic-section">
+      <div class="topic-h2"><span class="num">5.2</span> Binary Search</div>
+      <div class="explanation">
+        <p>Works on <strong>sorted arrays only</strong>. Compare target with the <strong>middle element</strong>. If equal, return; if target is smaller, search left half; if larger, search right half. Eliminates half the elements each time.</p>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">Pseudocode — Binary Search (Iterative)</div>
+        <pre><span class="fn">BinarySearch</span>(A[0..n-1], key):
+    low = 0,  high = n-1
+    <span class="kw">while</span> low <= high:
+        mid = (low + high) / <span class="nu">2</span>
+        <span class="kw">if</span> A[mid] == key: <span class="kw">return</span> mid
+        <span class="kw">elif</span> A[mid] < key: low = mid + <span class="nu">1</span>
+        <span class="kw">else</span>: high = mid - <span class="nu">1</span>
+    <span class="kw">return</span> -1
+
+<span class="cm">// Recurrence: T(n) = T(n/2) + 1,  T(1) = 1</span>
+<span class="cm">// Solution: T(n) = log₂(n) + 1 ∈ O(log n)</span></pre>
+      </div>
+
+      <table class="complexity-table">
+        <tr><th>Case</th><th>Time</th><th>When</th></tr>
+        <tr><td>Best</td><td class="tc-best">O(1)</td><td>Target is the middle element</td></tr>
+        <tr><td>Average</td><td class="tc-avg">O(log n)</td><td>—</td></tr>
+        <tr><td>Worst</td><td class="tc-worst">O(log n)</td><td>Not found / at ends</td></tr>
+      </table>
+
+      <div class="exam-box">
+        <div class="exam-box-title">🎯 Frequently Asked</div>
+        <ul>
+          <li>Trace binary search on array [2, 5, 8, 12, 16, 23, 38] for key=23</li>
+          <li>Derive recurrence T(n) = T(n/2) + 1 and solve it</li>
+          <li>Why does binary search require sorted array?</li>
+          <li>Compare Binary Search vs Linear Search complexity</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- MODULE 2 — MASTER'S THEOREM -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="page" id="page-masters-theorem">
+  <div class="content-header">
+    <div class="breadcrumb">Home → Module 2 → <span>Master's Theorem</span></div>
+    <div class="content-title">Master's Theorem</div>
+  </div>
+  <div class="content-body">
+
+    <div class="topic-section">
+      <div class="topic-h2"><span class="num">6.1</span> What is Master's Theorem?</div>
+      <div class="explanation">
+        <p>Master's Theorem provides a direct formula to solve recurrences of the form <strong>T(n) = aT(n/b) + f(n)</strong> without manual substitution. It has <strong>three cases</strong>.</p>
+        <p>Think of it as comparing f(n) (the work done at each level) with n^(log_b a) (the work done by leaves of the recursion tree).</p>
+      </div>
+
+      <div class="formula-box">
+        <div class="formula-box-title">📐 Master's Theorem — 3 Cases</div>
+        <div class="formula">
+          Given: T(n) = aT(n/b) + f(n),  a ≥ 1, b > 1<br>
+          Let p = log_b(a)  [compare f(n) with nᵖ]<br><br>
+          CASE 1: f(n) = O(nᵖ⁻ᵉ) for some ε > 0<br>
+          → T(n) = Θ(nᵖ)  [leaves dominate]<br><br>
+          CASE 2: f(n) = Θ(nᵖ)<br>
+          → T(n) = Θ(nᵖ log n)  [equal work at each level]<br><br>
+          CASE 3: f(n) = Ω(nᵖ⁺ᵉ) for some ε > 0<br>
+               AND a·f(n/b) ≤ c·f(n) for c < 1 (regularity)<br>
+          → T(n) = Θ(f(n))  [root dominates]
+        </div>
+      </div>
+
+      <div class="topic-h3">Examples — Apply Master's Theorem</div>
+
+      <table class="complexity-table">
+        <tr><th>Recurrence</th><th>a</th><th>b</th><th>f(n)</th><th>nˡᵒᵍᵇᵃ</th><th>Case</th><th>Solution</th></tr>
+        <tr><td>T(n)=2T(n/2)+n</td><td>2</td><td>2</td><td>n</td><td class="tc-avg">n¹</td><td>Case 2</td><td class="tc-avg">Θ(n log n)</td></tr>
+        <tr><td>T(n)=2T(n/2)+1</td><td>2</td><td>2</td><td>1</td><td>n¹</td><td>Case 1</td><td class="tc-avg">Θ(n)</td></tr>
+        <tr><td>T(n)=T(n/2)+1</td><td>1</td><td>2</td><td>1</td><td>n⁰=1</td><td>Case 2</td><td class="tc-best">Θ(log n)</td></tr>
+        <tr><td>T(n)=4T(n/2)+n</td><td>4</td><td>2</td><td>n</td><td>n²</td><td>Case 1</td><td class="tc-worst">Θ(n²)</td></tr>
+        <tr><td>T(n)=4T(n/2)+n²</td><td>4</td><td>2</td><td>n²</td><td>n²</td><td>Case 2</td><td class="tc-worst">Θ(n² log n)</td></tr>
+        <tr><td>T(n)=4T(n/2)+n³</td><td>4</td><td>2</td><td>n³</td><td>n²</td><td>Case 3</td><td class="tc-worst">Θ(n³)</td></tr>
+      </table>
+
+      <div class="revision-box">
+        <div class="revision-box-title">⚡ 30-Second Revision — Master's Theorem Trick</div>
+        <ul>
+          <li>Always compute <strong>p = log_b(a)</strong> first</li>
+          <li><strong>Case 1</strong>: f(n) grows SLOWER than nᵖ → Answer is Θ(nᵖ)</li>
+          <li><strong>Case 2</strong>: f(n) grows AT SAME RATE as nᵖ → Answer is Θ(nᵖ log n)</li>
+          <li><strong>Case 3</strong>: f(n) grows FASTER than nᵖ → Answer is Θ(f(n))</li>
+          <li>Merge Sort: T(n)=2T(n/2)+n → p=1, f(n)=n → Case 2 → Θ(n log n)</li>
+        </ul>
+      </div>
+
+      <div class="exam-box">
+        <div class="exam-box-title">🎯 Frequently Asked</div>
+        <ul>
+          <li>State Master's Theorem with all three cases (4-mark)</li>
+          <li>Apply Master's Theorem to T(n) = 2T(n/2) + n</li>
+          <li>Apply Master's Theorem to T(n) = 4T(n/2) + n²</li>
+          <li>Which case does Binary Search fall under? (Case 2)</li>
+          <li>When does Master's Theorem NOT apply? (if f(n) is not polynomial)</li>
+        </ul>
+      </div>
+
+      <div class="warn-box">
+        <strong>⚠️ Master's Theorem does NOT apply when:</strong> f(n) is not polynomially comparable with n^(log_b a). Example: T(n) = 2T(n/2) + n/log n — this falls between Case 1 and 2 and cannot be solved directly with Master's Theorem.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- MODULE 2 — SORTING ALGORITHMS -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="page" id="page-sorting">
+  <div class="content-header">
+    <div class="breadcrumb">Home → Module 2 → <span>Sorting Algorithms</span></div>
+    <div class="content-title">Merge Sort &amp; Quick Sort</div>
+  </div>
+  <div class="content-body">
+
+    <!-- MERGE SORT -->
+    <div class="topic-section">
+      <div class="topic-h2"><span class="num">7.1</span> Merge Sort</div>
+      <div class="explanation">
+        <p><strong>Divide:</strong> Split array into two equal halves. <strong>Conquer:</strong> Recursively sort each half. <strong>Combine:</strong> Merge the two sorted halves into one sorted array.</p>
+        <p>The merge step is the key — it takes two sorted arrays and produces one sorted array by comparing elements one by one.</p>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">Pseudocode — Merge Sort</div>
+        <pre><span class="fn">MergeSort</span>(A, left, right):
+    <span class="kw">if</span> left < right:
+        mid = (left + right) / <span class="nu">2</span>
+        <span class="fn">MergeSort</span>(A, left, mid)
+        <span class="fn">MergeSort</span>(A, mid+1, right)
+        <span class="fn">Merge</span>(A, left, mid, right)
+
+<span class="fn">Merge</span>(A, left, mid, right):
+    Create temp arrays L[] and R[]
+    i=j=<span class="nu">0</span>, k=left
+    <span class="kw">while</span> i < len(L) <span class="kw">and</span> j < len(R):
+        <span class="kw">if</span> L[i] <= R[j]: A[k++] = L[i++]
+        <span class="kw">else</span>: A[k++] = R[j++]
+    Copy remaining elements
+
+<span class="cm">// Recurrence: T(n) = 2T(n/2) + n → Θ(n log n)</span></pre>
+      </div>
+
+      <table class="complexity-table">
+        <tr><th>Case</th><th>Time</th><th>Space</th><th>Stable?</th></tr>
+        <tr><td>Best</td><td class="tc-best">Θ(n log n)</td><td rowspan="3" class="tc-worst">O(n)</td><td rowspan="3" class="tc-best">Yes</td></tr>
+        <tr><td>Average</td><td class="tc-avg">Θ(n log n)</td></tr>
+        <tr><td>Worst</td><td class="tc-worst">Θ(n log n)</td></tr>
+      </table>
+
+      <div class="revision-box">
+        <div class="revision-box-title">⚡ Merge Sort Key Points</div>
+        <ul>
+          <li>Always Θ(n log n) regardless of input</li>
+          <li>Stable sorting algorithm</li>
+          <li>Uses O(n) extra space — <strong>NOT in-place</strong></li>
+          <li>Best for linked lists; preferred when stability is needed</li>
+          <li>Recurrence: T(n) = 2T(n/2) + n → Case 2 of Master's Theorem</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- QUICK SORT -->
+    <div class="topic-section">
+      <div class="topic-h2"><span class="num">7.2</span> Quick Sort</div>
+      <div class="explanation">
+        <p><strong>Divide:</strong> Choose a <strong>pivot</strong> element and partition array into two parts — elements less than pivot and elements greater than pivot. <strong>Conquer:</strong> Recursively sort both parts. <strong>Combine:</strong> Nothing — it's in-place!</p>
+        <p>The <strong>partition step</strong> is the key operation. Pivot ends up at its final sorted position after partitioning.</p>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">Pseudocode — Quick Sort</div>
+        <pre><span class="fn">QuickSort</span>(A, low, high):
+    <span class="kw">if</span> low < high:
+        pivot_idx = <span class="fn">Partition</span>(A, low, high)
+        <span class="fn">QuickSort</span>(A, low, pivot_idx - <span class="nu">1</span>)
+        <span class="fn">QuickSort</span>(A, pivot_idx + <span class="nu">1</span>, high)
+
+<span class="fn">Partition</span>(A, low, high):  <span class="cm">// Lomuto scheme</span>
+    pivot = A[high]
+    i = low - <span class="nu">1</span>
+    <span class="kw">for</span> j = low <span class="kw">to</span> high-1:
+        <span class="kw">if</span> A[j] <= pivot:
+            i = i + <span class="nu">1</span>
+            <span class="fn">swap</span>(A[i], A[j])
+    <span class="fn">swap</span>(A[i+1], A[high])
+    <span class="kw">return</span> i + <span class="nu">1</span></pre>
+      </div>
+
+      <table class="complexity-table">
+        <tr><th>Case</th><th>Time</th><th>When?</th></tr>
+        <tr><td>Best</td><td class="tc-best">O(n log n)</td><td>Pivot always divides array equally</td></tr>
+        <tr><td>Average</td><td class="tc-avg">O(n log n)</td><td>Random pivot selection</td></tr>
+        <tr><td>Worst</td><td class="tc-worst">O(n²)</td><td>Already sorted / reverse sorted (last element pivot)</td></tr>
+      </table>
+
+      <div class="warn-box">
+        <strong>⚠️ Quick Sort vs Merge Sort — Critical Differences:</strong><br>
+        Quick Sort: In-place (O(log n) stack), NOT stable, O(n²) worst case, faster in practice.<br>
+        Merge Sort: O(n) extra space, Stable, Always O(n log n), better for linked lists.
+      </div>
+
+      <div class="exam-box">
+        <div class="exam-box-title">🎯 Frequently Asked</div>
+        <ul>
+          <li>Trace Quick Sort on [5, 3, 8, 4, 2] using last element as pivot</li>
+          <li>When does Quick Sort degrade to O(n²)? How to avoid it?</li>
+          <li>Compare Merge Sort and Quick Sort (table form — very common!)</li>
+          <li>Write partition function pseudocode and explain it</li>
+          <li>Solve recurrence for best case: T(n) = 2T(n/2) + n</li>
+        </ul>
+      </div>
+
+      <div class="formula-box">
+        <div class="formula-box-title">📐 Sorting Algorithm Comparison Table</div>
+        <div class="formula" style="font-size:13px; line-height: 2;">
+          Algorithm   | Best     | Average  | Worst   | Space | Stable<br>
+          ─────────────────────────────────────────────────────────<br>
+          Bubble Sort | O(n)     | O(n²)    | O(n²)   | O(1)  | Yes<br>
+          Select Sort | O(n²)    | O(n²)    | O(n²)   | O(1)  | No<br>
+          Insert Sort | O(n)     | O(n²)    | O(n²)   | O(1)  | Yes<br>
+          Merge Sort  | O(nlogn) | O(nlogn) | O(nlogn)| O(n)  | Yes<br>
+          Quick Sort  | O(nlogn) | O(nlogn) | O(n²)   | O(logn)| No
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- MODULE 2 — DECREASE AND CONQUER -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="page" id="page-decrease-conquer">
+  <div class="content-header">
+    <div class="breadcrumb">Home → Module 2 → <span>Decrease and Conquer</span></div>
+    <div class="content-title">Decrease and Conquer</div>
+  </div>
+  <div class="content-body">
+
+    <div class="topic-section">
+      <div class="topic-h2"><span class="num">8.1</span> General Method</div>
+      <div class="explanation">
+        <p><strong>Decrease and Conquer</strong> reduces a problem to a <strong>single smaller instance</strong> of the same problem (unlike Divide and Conquer which creates multiple subproblems).</p>
+        <p>Three types: <span class="highlight">Decrease by constant</span> (n-1 each time), <span class="highlight">Decrease by factor</span> (n/2 each time), <span class="highlight">Variable decrease</span> (Euclid's GCD).</p>
+      </div>
+
+      <div class="revision-box">
+        <div class="revision-box-title">⚡ Key Difference: D&amp;C vs Decrease&amp;Conquer</div>
+        <ul>
+          <li><strong>Divide &amp; Conquer</strong>: Split into a (a≥2) subproblems of size n/b</li>
+          <li><strong>Decrease &amp; Conquer</strong>: Reduce to ONE smaller problem (size n-1 or n/b)</li>
+          <li>D&amp;C: Merge Sort → 2 subproblems</li>
+          <li>Dec&amp;Conq: Insertion Sort → solve n-1, then insert nth element</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- INSERTION SORT -->
+    <div class="topic-section">
+      <div class="topic-h2"><span class="num">8.2</span> Insertion Sort</div>
+      <div class="explanation">
+        <p>Assume first i-1 elements are sorted. Take the i-th element and <strong>insert</strong> it into its correct position among the first i-1 elements. Repeat for i = 1 to n-1.</p>
+        <p>Like sorting playing cards in your hand — you pick one card at a time and slide it into the right place.</p>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">Pseudocode — Insertion Sort</div>
+        <pre><span class="fn">InsertionSort</span>(A[0..n-1]):
+    <span class="kw">for</span> i = 1 <span class="kw">to</span> n-1:
+        key = A[i]
+        j = i - <span class="nu">1</span>
+        <span class="kw">while</span> j >= <span class="nu">0</span> <span class="kw">and</span> A[j] > key:
+            A[j+1] = A[j]
+            j = j - <span class="nu">1</span>
+        A[j+1] = key
+
+<span class="cm">// Best case: Already sorted → O(n) (inner while never executes)</span>
+<span class="cm">// Worst case: Reverse sorted → O(n²)</span>
+<span class="cm">// Basic op: comparison A[j] > key</span></pre>
+      </div>
+
+      <table class="complexity-table">
+        <tr><th>Case</th><th>Time</th><th>When</th></tr>
+        <tr><td>Best</td><td class="tc-best">O(n)</td><td>Array already sorted</td></tr>
+        <tr><td>Average</td><td class="tc-avg">O(n²)</td><td>—</td></tr>
+        <tr><td>Worst</td><td class="tc-worst">O(n²)</td><td>Reverse sorted array</td></tr>
+      </table>
+
+      <div class="exam-box">
+        <div class="exam-box-title">🎯 Insertion Sort Key Facts</div>
+        <ul>
+          <li>Stable and in-place (O(1) extra space)</li>
+          <li>Best sorting algorithm for <strong>nearly sorted</strong> arrays</li>
+          <li>Online algorithm — can sort as data arrives</li>
+          <li>Used in practice for small arrays (n ≤ 20)</li>
+          <li>Decrease-by-one: solve for n-1 elements, then insert nth</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- TOPOLOGICAL SORTING -->
+    <div class="topic-section">
+      <div class="topic-h2"><span class="num">8.3</span> Topological Sorting</div>
+      <div class="explanation">
+        <p>Given a <strong>Directed Acyclic Graph (DAG)</strong>, topological sort produces a linear ordering of vertices such that for every edge (u→v), vertex u appears before v.</p>
+        <p>Used in scheduling tasks with dependencies. Example: course prerequisites, build systems, instruction scheduling.</p>
+        <p>Topological sort exists only for DAGs. If there's a cycle, no topological ordering is possible.</p>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">Algorithm — Source Removal Method (DFS-based)</div>
+        <pre><span class="fn">TopologicalSort</span>(G):
+    <span class="cm">// Method 1: Source removal</span>
+    result = []
+    <span class="kw">while</span> G has vertices:
+        Find a vertex v with in-degree = <span class="nu">0</span>  <span class="cm">// source</span>
+        Add v to result
+        Remove v and all its edges from G
+    <span class="kw">return</span> result
+
+<span class="cm">// Method 2: DFS-based</span>
+<span class="fn">DFS_TopSort</span>(G):
+    Mark all vertices as unvisited
+    result = empty stack
+    <span class="kw">for</span> each unvisited vertex v:
+        <span class="fn">DFS</span>(v, result)
+    Pop all from stack <span class="cm">// gives topological order</span>
+
+<span class="cm">// Time: O(V + E) — same as DFS</span></pre>
+      </div>
+
+      <div class="formula-box">
+        <div class="formula-box-title">📐 Topological Sort — Key Facts</div>
+        <div class="formula">
+          Works only on: DAG (Directed Acyclic Graph)<br>
+          Time Complexity: O(V + E)<br>
+          Space: O(V)<br><br>
+          If in-degree of a vertex = 0 → it's a source → it can come first<br>
+          If cycle exists → no topological ordering → algorithm fails
+        </div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">Example — Topological Sort</div>
+        <pre><span class="cm">// Graph: A→C, A→B, B→D, C→D, D→E</span>
+In-degrees: A=0, B=1, C=1, D=2, E=1
+
+Step 1: Remove A (in-degree 0) → result: [A]
+        Update: B=0, C=0, D=2
+Step 2: Remove B (in-degree 0) → result: [A, B]
+        Update: D=1
+Step 3: Remove C (in-degree 0) → result: [A, B, C]
+        Update: D=0
+Step 4: Remove D → result: [A, B, C, D]
+        Update: E=0
+Step 5: Remove E → result: [A, B, C, D, E]
+
+<span class="cm">// Note: Multiple valid orderings may exist</span></pre>
+      </div>
+
+      <div class="exam-box">
+        <div class="exam-box-title">🎯 Frequently Asked</div>
+        <ul>
+          <li>Define topological sort and state when it exists</li>
+          <li>Perform topological sort on a given DAG (step-by-step)</li>
+          <li>What happens if the graph has a cycle? (No topological order)</li>
+          <li>What is the time complexity of topological sort? O(V+E)</li>
+          <li>Applications of topological sort (build systems, scheduling)</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- EXAM BOOSTER — 2-MARK QUESTIONS (EXPANDED) -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="page" id="page-q2mark">
+  <div class="content-header">
+    <div class="breadcrumb">Home → Exam Booster → <span>2-Mark Questions</span></div>
+    <div class="content-title">2-Mark Questions &amp; Answers</div>
+  </div>
+  <div class="content-body">
+    <div class="explanation" style="border-left-color:var(--green); margin-bottom:24px;">
+      ✏️ Click any question to reveal the answer. These are the most commonly asked 2-mark questions across all topics. Write 3–4 crisp lines per answer in exams.
+    </div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab(this, 'tab-algo')">Algorithm Basics</button>
+      <button class="tab-btn" onclick="switchTab(this, 'tab-asym')">Asymptotic</button>
+      <button class="tab-btn" onclick="switchTab(this, 'tab-brute')">Brute Force</button>
+      <button class="tab-btn" onclick="switchTab(this, 'tab-exh')">Exhaustive Search</button>
+      <button class="tab-btn" onclick="switchTab(this, 'tab-dc')">D&amp;C &amp; Sorting</button>
+      <button class="tab-btn" onclick="switchTab(this, 'tab-dec')">Decrease &amp; Conquer</button>
+    </div>
+
+    <!-- ── Algorithm Basics 2-Mark ── -->
+    <div class="tab-content active" id="tab-algo">
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q1</span> Define an algorithm and list its five essential properties.</div><div class="qa-a"><p>An algorithm is a <strong>finite sequence of unambiguous, executable instructions</strong> that takes input and produces output within finite time.</p><p><strong>Five Properties:</strong></p><ul><li><strong>Input</strong> – Takes zero or more inputs</li><li><strong>Output</strong> – Produces at least one output</li><li><strong>Definiteness</strong> – Every step is clear and unambiguous</li><li><strong>Finiteness</strong> – Must terminate after finite steps</li><li><strong>Effectiveness</strong> – Each step must be feasibly doable</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q2</span> Differentiate between algorithm and program.</div><div class="qa-a"><ul><li><strong>Algorithm</strong>: Language-independent, logical steps; must be finite; design phase</li><li><strong>Program</strong>: Written in a specific language (C, Java...); can run indefinitely (OS); implementation phase</li><li>Every program implements an algorithm; not every algorithm is a program</li><li>Algorithm → Blueprint; Program → House built from blueprint</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q3</span> What is the order of growth? Why do we ignore constants?</div><div class="qa-a"><p><strong>Order of growth</strong> = how T(n) scales as n → ∞. Only the <em>dominant term</em> matters.</p><ul><li>Example: T(n) = 5n² + 100n + 999 → Order of growth is n²</li><li>Constants ignored: for large n, 1000n &lt; n² always. Constants become irrelevant.</li><li>We care about the shape of growth (linear, quadratic...) not exact counts</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q4</span> List the basic efficiency classes from best to worst with examples.</div><div class="qa-a"><ul><li><strong>O(1)</strong> – Constant: array index access</li><li><strong>O(log n)</strong> – Logarithmic: Binary Search</li><li><strong>O(n)</strong> – Linear: Linear Search</li><li><strong>O(n log n)</strong> – Linearithmic: Merge Sort</li><li><strong>O(n²)</strong> – Quadratic: Bubble Sort</li><li><strong>O(2ⁿ)</strong> – Exponential: Brute force subset enumeration</li><li><strong>O(n!)</strong> – Factorial: Brute force TSP</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q5</span> What are the six important problem types in algorithms?</div><div class="qa-a"><ul><li><strong>Sorting</strong> – Arrange in order (Bubble, Merge, Quick Sort)</li><li><strong>Searching</strong> – Find element (Binary Search, Linear Search)</li><li><strong>String Processing</strong> – Pattern matching in text</li><li><strong>Graph Problems</strong> – Traversal, shortest path, spanning tree</li><li><strong>Combinatorial Problems</strong> – TSP, Knapsack (NP-Hard)</li><li><strong>Geometric Problems</strong> – Convex hull, closest pair of points</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q6</span> What is a recurrence relation? Give an example.</div><div class="qa-a"><p>A <strong>recurrence relation</strong> expresses T(n) in terms of T of a smaller input. Used to analyze recursive algorithms.</p><ul><li>Example: Factorial → T(n) = T(n–1) + 1, T(0) = 0</li><li>Example: Binary Search → T(n) = T(n/2) + 1</li><li>Example: Merge Sort → T(n) = 2T(n/2) + n</li><li>Solved using: substitution, recursion tree, or Master's Theorem</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q7</span> What is the difference between time complexity and space complexity?</div><div class="qa-a"><ul><li><strong>Time Complexity</strong> – Number of basic operations as a function of input size n</li><li><strong>Space Complexity</strong> – Amount of memory required as a function of n</li><li>Time: counted as comparisons, swaps, additions (basic ops)</li><li>Space: includes both input storage + auxiliary (extra) space</li><li>Example: Merge Sort – Time Θ(n log n), Space O(n) auxiliary</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q8</span> What is a basic operation in algorithm analysis?</div><div class="qa-a"><p>The <strong>basic operation</strong> is the most frequently executed operation in an algorithm — the one that dominates the running time. Counting it gives us the time complexity.</p><ul><li>Sorting algorithms: <strong>comparison</strong> is usually the basic op</li><li>Matrix multiplication: <strong>multiplication</strong> is the basic op</li><li>Polynomial evaluation: <strong>multiplication</strong></li><li>String matching: <strong>character comparison</strong></li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q9</span> Define best case, worst case, and average case complexity.</div><div class="qa-a"><ul><li><strong>Best Case</strong> – Minimum steps for the most favorable input. Example: Linear Search finds key at index 0 → O(1)</li><li><strong>Worst Case</strong> – Maximum steps for the least favorable input. Example: Linear Search, key not present → O(n)</li><li><strong>Average Case</strong> – Expected steps averaged over all possible inputs. Example: Linear Search → O(n/2) ≈ O(n)</li><li>Worst case is most commonly analyzed — gives guarantees</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q10</span> What is the importance of algorithm analysis?</div><div class="qa-a"><ul><li>Predict performance before implementation</li><li>Compare multiple algorithms for same problem</li><li>Identifies bottlenecks — guides optimization</li><li>Helps choose algorithm suited to input size</li><li>Example: For n = 10⁶, O(n log n) takes ~2×10⁷ ops; O(n²) takes 10¹² — practically unusable</li></ul></div></div>
+    </div>
+
+    <!-- ── Asymptotic 2-Mark ── -->
+    <div class="tab-content" id="tab-asym">
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q1</span> Define Big-O notation formally with example.</div><div class="qa-a"><p><strong>Definition:</strong> f(n) ∈ O(g(n)) iff ∃ positive constants c and n₀ such that f(n) ≤ c·g(n) for all n ≥ n₀.</p><ul><li>Gives <strong>upper bound</strong> (worst-case behavior)</li><li>Example: 3n + 5 ∈ O(n) — choose c = 4, n₀ = 5. Then 3n+5 ≤ 4n ∀n≥5 ✓</li><li>O(n²) is also valid for 3n+5, just not tight</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q2</span> Define Omega (Ω) notation with example.</div><div class="qa-a"><p><strong>Definition:</strong> f(n) ∈ Ω(g(n)) iff ∃ positive constants c and n₀ such that f(n) ≥ c·g(n) for all n ≥ n₀.</p><ul><li>Gives <strong>lower bound</strong> — algorithm takes at least this much time</li><li>Example: 5n² + 3n ∈ Ω(n²) — choose c = 5, n₀ = 1. Then 5n²+3n ≥ 5n² ∀n≥1 ✓</li><li>Ω(1) holds for every algorithm</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q3</span> Define Theta (Θ) notation with example.</div><div class="qa-a"><p><strong>Definition:</strong> f(n) ∈ Θ(g(n)) iff ∃ positive constants c₁, c₂, n₀ such that c₁·g(n) ≤ f(n) ≤ c₂·g(n) for all n ≥ n₀.</p><ul><li>Gives <strong>tight bound</strong> — exact order of growth</li><li>Θ(g(n)) = O(g(n)) ∩ Ω(g(n))</li><li>Example: 5n² + 3n ∈ Θ(n²) — c₁=5, c₂=6, n₀=3</li><li>Most precise notation — preferred in analysis</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q4</span> What is the difference between O and Θ? Why does it matter?</div><div class="qa-a"><ul><li><strong>O</strong> = upper bound: f could be faster (not tight)</li><li><strong>Θ</strong> = tight bound: f grows exactly at this rate</li><li>Example: Bubble Sort is both O(n²) AND O(n³) and O(2ⁿ) — all valid but not tight</li><li>Bubble Sort is Θ(n²) — this is the precise statement</li><li>Examiners expect Θ when asking for "exact" complexity</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q5</span> Prove: 5n² + 3n ∈ O(n²).</div><div class="qa-a"><p>We need to find c > 0, n₀ such that 5n² + 3n ≤ c·n² for all n ≥ n₀.</p><ul><li>Choose c = 6: 5n² + 3n ≤ 6n² iff 3n ≤ n² iff 3 ≤ n</li><li>So for <strong>c = 6, n₀ = 3</strong>: 5n² + 3n ≤ 6n² ∀n ≥ 3 ✓</li><li>Therefore <strong>5n² + 3n ∈ O(n²)</strong></li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q6</span> Simplify: T(n) = 7n³ + 4n² + 2n + 9. Give tightest bound.</div><div class="qa-a"><ul><li>Dominant term = <strong>n³</strong> (grows fastest)</li><li>Drop all lower-order terms and constants</li><li>T(n) ∈ <strong>Θ(n³)</strong></li><li>Also valid: T(n) ∈ O(n³), T(n) ∈ Ω(n³)</li><li>NOT correct to say Θ(n²) or Θ(n⁴) — those are not tight</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q7</span> State the transitivity and sum rules of asymptotic notation.</div><div class="qa-a"><p><strong>Transitivity:</strong> If f(n) ∈ O(g(n)) and g(n) ∈ O(h(n)), then f(n) ∈ O(h(n)).</p><p><strong>Sum Rule:</strong> If f₁(n) ∈ O(g₁(n)) and f₂(n) ∈ O(g₂(n)), then f₁(n) + f₂(n) ∈ O(max(g₁(n), g₂(n))).</p><ul><li>Example: O(n²) + O(n³) = O(n³)</li><li>Example: O(n log n) + O(n²) = O(n²)</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q8</span> What is the relationship: n! vs 2ⁿ vs n² — which grows fastest?</div><div class="qa-a"><ul><li>Growth order: n! &gt; 2ⁿ &gt; n³ &gt; n² &gt; n log n &gt; n &gt; log n &gt; 1</li><li><strong>n!</strong> grows fastest (factorial). For n = 20: 20! ≈ 2.4 × 10¹⁸</li><li><strong>2ⁿ</strong> grows next. For n = 20: 2²⁰ = 1,048,576</li><li>This is why TSP (O(n!)) is far worse than Knapsack brute force (O(2ⁿ))</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q9</span> Is O(log₂n) same as O(log₁₀n)? Explain.</div><div class="qa-a"><ul><li><strong>Yes</strong>, they are asymptotically the same: O(log₂n) = O(log₁₀n)</li><li>Because: log₂n = log₁₀n / log₁₀2 = log₁₀n × 3.32...</li><li>The base change factor (3.32) is a constant — absorbed by Big-O</li><li>In Big-O, we simply write <strong>O(log n)</strong> without specifying base</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q10</span> What is the tightest complexity class for Binary Search?</div><div class="qa-a"><ul><li>Binary Search: T(n) = T(n/2) + 1, T(1) = 1</li><li>Solved: T(n) = log₂n + 1</li><li>Tightest bound: <strong>Θ(log n)</strong></li><li>Best case: O(1) (key is middle element)</li><li>Worst/Average case: Θ(log n)</li><li>Space: O(1) iterative, O(log n) recursive (call stack)</li></ul></div></div>
+    </div>
+
+    <!-- ── Brute Force 2-Mark ── -->
+    <div class="tab-content" id="tab-brute">
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q1</span> Define brute force technique. Give two examples.</div><div class="qa-a"><p><strong>Brute Force</strong> = Directly apply the problem definition, trying all candidates without clever tricks.</p><ul><li>Simple, straightforward, always correct</li><li>Example 1: <strong>Bubble Sort</strong> — compare all adjacent pairs and swap</li><li>Example 2: <strong>String Matching</strong> — check pattern at every text position</li><li>Weakness: Often O(n²) or worse — inefficient for large inputs</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q2</span> What is the time complexity of Bubble Sort and how is it derived?</div><div class="qa-a"><p>Bubble Sort: <strong>Θ(n²)</strong></p><ul><li>Outer loop: i = 0 to n–2 (runs n–1 times)</li><li>Inner loop: j = 0 to n–2–i (runs n–1–i times)</li><li>Total comparisons = Σ(n–1–i) from i=0 to n–2 = (n–1)+(n–2)+...+1 = n(n–1)/2</li><li>n(n–1)/2 ∈ Θ(n²) ✓</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q3</span> Why is Selection Sort always Θ(n²) regardless of input?</div><div class="qa-a"><ul><li>Selection Sort must always find the minimum in the unsorted portion</li><li>This requires scanning ALL remaining elements — no shortcut possible</li><li>Total comparisons = (n–1)+(n–2)+...+1 = n(n–1)/2 — always the same count</li><li>Unlike Bubble Sort (which can exit early with flag), Selection Sort has no early exit</li><li>∴ Best = Worst = Average = <strong>Θ(n²)</strong></li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q4</span> What is the worst case of brute force string matching and when does it occur?</div><div class="qa-a"><ul><li>Worst case: <strong>O(n × m)</strong> where n = text length, m = pattern length</li><li>Occurs when: Almost every position in text nearly-matches the pattern</li><li>Classic example: Text = "aaaaaa...a", Pattern = "aaa...ab"</li><li>At every position, m–1 characters match before failure → m comparisons per shift</li><li>n–m+1 positions × m comparisons = O(n·m)</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q5</span> Is Bubble Sort stable? Is Selection Sort stable? Justify.</div><div class="qa-a"><ul><li><strong>Bubble Sort — Stable ✓</strong>: Only swaps when A[j] > A[j+1] (strictly greater). Equal elements never swap → relative order preserved</li><li><strong>Selection Sort — NOT stable ✗</strong>: Swapping the minimum with A[i] can skip over equal elements</li><li>Example: [3a, 3b, 1] → Selection sort → [1, 3b, 3a]: 3a and 3b swapped — unstable!</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q6</span> What is the number of swaps in Selection Sort? Why is this an advantage?</div><div class="qa-a"><ul><li>Selection Sort does at most <strong>n–1 swaps</strong> (one per outer loop iteration)</li><li>This is O(n) — optimal for swaps</li><li><strong>Advantage</strong>: When memory writes are expensive (e.g., flash memory), fewer writes = better</li><li>Compared to Bubble Sort which can do O(n²) swaps in worst case</li><li>Trade-off: Same O(n²) comparisons, but far fewer writes</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q7</span> What is Linear Search? Give its best and worst case complexities.</div><div class="qa-a"><ul><li>Linear Search = Scan each element one by one until key is found or list ends</li><li>Works on <strong>unsorted</strong> arrays (no precondition needed)</li><li><strong>Best case</strong>: O(1) — key is at first position</li><li><strong>Worst case</strong>: O(n) — key is last or absent</li><li><strong>Average case</strong>: O(n/2) ≈ O(n)</li><li>Space: O(1)</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q8</span> Differentiate Bubble Sort and Selection Sort.</div><div class="qa-a"><ul><li><strong>Bubble Sort</strong>: Compares adjacent pairs, swaps immediately, stable, O(n²) swaps worst case, can detect sorted input (O(n) best with flag)</li><li><strong>Selection Sort</strong>: Finds minimum, single swap per pass, NOT stable, only O(n) swaps, always Θ(n²)</li><li>Bubble Sort is adaptive; Selection Sort is not</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q9</span> What is the space complexity of Bubble Sort and Selection Sort?</div><div class="qa-a"><ul><li>Both are <strong>O(1) space</strong> — in-place sorting algorithms</li><li>No extra arrays needed; only a few variables (loop counters, temp for swap)</li><li>In-place = does not require extra memory proportional to input size</li><li>Compare: Merge Sort uses O(n) extra space — NOT in-place</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q10</span> Give pseudocode outline for brute force string matching and its complexity.</div><div class="qa-a"><p><strong>Pseudocode:</strong> for i = 0 to n–m: if T[i..i+m–1] == P[0..m–1]: return i. return –1</p><ul><li>Outer loop: n–m+1 positions</li><li>Inner comparison: up to m characters each</li><li><strong>Best case</strong>: O(m) — match at first position</li><li><strong>Worst case</strong>: O((n–m+1)×m) ≈ O(n·m)</li><li><strong>Average case</strong>: O(n) for random text</li></ul></div></div>
+    </div>
+
+    <!-- ── Exhaustive Search 2-Mark ── -->
+    <div class="tab-content" id="tab-exh">
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q1</span> Define Travelling Salesperson Problem (TSP).</div><div class="qa-a"><ul><li>Given: n cities with pairwise distances (complete weighted graph)</li><li>Find: <strong>Shortest Hamiltonian cycle</strong> — visit each city exactly once and return to start</li><li>Decision version: Is there a tour of cost ≤ k?</li><li>Optimization version: Find the minimum cost tour</li><li>TSP is <strong>NP-Hard</strong> — no known polynomial-time algorithm</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q2</span> How many distinct tours in TSP for n cities (brute force)?</div><div class="qa-a"><ul><li>Fix one city (say city 1) to avoid counting rotations of same tour</li><li>Remaining (n–1) cities can be arranged in <strong>(n–1)!</strong> ways</li><li>Each tour counted twice (forward + reverse) → <strong>(n–1)!/2</strong> distinct tours</li><li>n=4: (4–1)!/2 = 3. n=5: 4!/2 = 12. n=10: 9!/2 = 181,440</li><li>Complexity: <strong>O(n!)</strong></li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q3</span> Define the 0/1 Knapsack Problem.</div><div class="qa-a"><ul><li>Given: n items, each with weight w[i] and value v[i]; knapsack capacity W</li><li>Goal: Select items to <strong>maximize total value</strong> such that total weight ≤ W</li><li>Each item: either fully taken (1) or left (0) — no fractions</li><li>Brute force: enumerate all 2ⁿ subsets</li><li>Applications: cargo loading, resource allocation, investment planning</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q4</span> What is the brute force complexity of 0/1 Knapsack?</div><div class="qa-a"><ul><li>n items → 2ⁿ possible subsets (each item: take or leave)</li><li>For each subset: check feasibility (weight ≤ W) and record max value</li><li>Complexity: <strong>O(2ⁿ)</strong> — exponential</li><li>For n=20: 2²⁰ ≈ 1 million. For n=50: 2⁵⁰ ≈ 10¹⁵ — impractical</li><li>Better solution: Dynamic Programming reduces this to O(nW)</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q5</span> What is exhaustive search? When is it used?</div><div class="qa-a"><ul><li><strong>Exhaustive search</strong> = Generate all candidate solutions, test each, keep the best</li><li>Also called <em>generate and test</em></li><li>Used when: problem has small input, no better algorithm known, need exact optimal solution</li><li>Examples: TSP (all permutations), Knapsack (all subsets), Subset Sum</li><li>Advantage: Guaranteed optimal. Disadvantage: Exponential time</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q6</span> What is the difference between TSP and Knapsack in brute force?</div><div class="qa-a"><ul><li><strong>TSP</strong>: Combinatorial on <em>permutations</em> — enumerate all (n–1)! tours → O(n!)</li><li><strong>Knapsack</strong>: Combinatorial on <em>subsets</em> — enumerate all 2ⁿ subsets → O(2ⁿ)</li><li>TSP is harder: n! &gt;&gt; 2ⁿ for large n</li><li>TSP: minimize tour cost. Knapsack: maximize value within weight</li><li>Both: NP-Hard problems</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q7</span> What is a Hamiltonian cycle?</div><div class="qa-a"><ul><li>A <strong>Hamiltonian cycle</strong> is a cycle in a graph that visits every vertex exactly once and returns to the starting vertex</li><li>Not all graphs have Hamiltonian cycles</li><li>TSP seeks the minimum cost Hamiltonian cycle in a complete weighted graph</li><li>Hamiltonian path: visits every vertex once but doesn't return to start</li><li>Finding Hamiltonian cycle is NP-Complete</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q8</span> Solve Knapsack for: Items = {(w=2,v=3),(w=3,v=4),(w=4,v=5)}, W=5.</div><div class="qa-a"><p>Enumerate all 2³ = 8 subsets:</p><ul><li>{} → w=0, v=0 ✓</li><li>{1} → w=2, v=3 ✓</li><li>{2} → w=3, v=4 ✓</li><li>{3} → w=4, v=5 ✓</li><li>{1,2} → w=5, v=7 ✓ ← <strong>MAX</strong></li><li>{1,3} → w=6 ✗ (exceeds W)</li><li>{2,3} → w=7 ✗</li><li>{1,2,3} → w=9 ✗</li></ul><p><strong>Answer: Select items 1 and 2, value = 7</strong></p></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q9</span> Why is TSP called NP-Hard?</div><div class="qa-a"><ul><li>No known polynomial-time algorithm can solve TSP optimally</li><li>Every known exact algorithm has exponential worst-case complexity</li><li>NP-Hard = at least as hard as the hardest problems in NP</li><li>Even verifying a solution is "optimal" requires checking all others</li><li>Approximation algorithms exist (e.g., Christofides: 1.5× optimal in polynomial time)</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q10</span> What is the role of exhaustive search in algorithm design?</div><div class="qa-a"><ul><li>Serves as a <strong>baseline</strong> for comparing efficient algorithms</li><li>Used to verify correctness of faster algorithms on small inputs</li><li>Foundation for understanding problem difficulty</li><li>Leads to development of better strategies: greedy, DP, branch-and-bound</li><li>Always correct — useful when n is very small (n ≤ 20 for 2ⁿ, n ≤ 12 for n!)</li></ul></div></div>
+    </div>
+
+    <!-- ── D&C Sorting 2-Mark ── -->
+    <div class="tab-content" id="tab-dc">
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q1</span> State the general recurrence for Divide and Conquer.</div><div class="qa-a"><ul><li><strong>T(n) = aT(n/b) + f(n)</strong></li><li>a = number of subproblems (a ≥ 1)</li><li>b = factor by which problem size reduces (b > 1)</li><li>f(n) = cost of divide + combine steps</li><li>Example: Merge Sort → a=2, b=2, f(n)=n → T(n)=2T(n/2)+n</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q2</span> What is Binary Search? State its recurrence and complexity.</div><div class="qa-a"><ul><li>Binary Search: Compare target with middle element of <strong>sorted</strong> array; recurse on left or right half</li><li>Recurrence: <strong>T(n) = T(n/2) + 1</strong>, T(1) = 1</li><li>Solution: T(n) = log₂n + 1 ∈ <strong>Θ(log n)</strong></li><li>Best: O(1), Worst: O(log n), Space: O(1)</li><li>Requires sorted input — limitation!</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q3</span> What is the recurrence for Merge Sort? Solve it.</div><div class="qa-a"><ul><li>Merge Sort: <strong>T(n) = 2T(n/2) + n</strong>, T(1) = 0</li><li>By Master's Theorem: a=2, b=2, p = log₂2 = 1, nᵖ = n. f(n) = n = Θ(n) → Case 2</li><li>∴ T(n) = <strong>Θ(n log n)</strong></li><li>This is the same for best, average, and worst case</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q4</span> When does Quick Sort degrade to O(n²)?</div><div class="qa-a"><ul><li>When pivot is always the smallest or largest element → most unbalanced partition</li><li>Happens with: already sorted array (ascending or descending) when first/last element is pivot</li><li>Recurrence (worst case): T(n) = T(n–1) + T(0) + n = T(n–1) + n → O(n²)</li><li>Solution: Use <strong>random pivot</strong> or <strong>median-of-three</strong> pivot selection</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q5</span> Compare Merge Sort and Quick Sort briefly.</div><div class="qa-a"><ul><li><strong>Merge Sort</strong>: Always Θ(n log n), O(n) extra space, Stable, Good for linked lists</li><li><strong>Quick Sort</strong>: O(n log n) avg, O(n²) worst, O(log n) space, NOT stable, faster in practice</li><li>Merge Sort = predictable performance. Quick Sort = better cache performance on arrays</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q6</span> State Master's Theorem Case 2 and give an example.</div><div class="qa-a"><ul><li><strong>Case 2</strong>: If f(n) = Θ(n^(log_b a)), then T(n) = Θ(n^(log_b a) × log n)</li><li>i.e., when the cost at each level is equal — log n levels → multiply by log n</li><li>Example: T(n) = 2T(n/2) + n → a=2, b=2, log₂2 = 1, f(n)=n=Θ(n¹) → Case 2 → <strong>Θ(n log n)</strong></li><li>Also: T(n) = T(n/2) + 1 → log₂1=0, f(n)=1=Θ(n⁰) → Case 2 → <strong>Θ(log n)</strong></li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q7</span> What is a stable sorting algorithm? Which of Merge, Quick, Bubble are stable?</div><div class="qa-a"><ul><li><strong>Stable sort</strong>: Preserves the relative order of equal elements</li><li>Example: [3a, 1, 3b] sorted → [1, 3a, 3b] (stable) not [1, 3b, 3a]</li><li><strong>Bubble Sort — Stable ✓</strong></li><li><strong>Merge Sort — Stable ✓</strong> (merge step: take left element first on tie)</li><li><strong>Quick Sort — NOT Stable ✗</strong> (partition step can reorder equals)</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q8</span> Apply Master's Theorem to T(n) = 4T(n/2) + n².</div><div class="qa-a"><ul><li>a=4, b=2, log_b(a) = log₂(4) = <strong>2</strong>, so nᵖ = n²</li><li>f(n) = n² = Θ(n²) = Θ(nᵖ) → <strong>Case 2</strong></li><li>∴ T(n) = <strong>Θ(n² log n)</strong></li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q9</span> What is the space complexity of Quick Sort?</div><div class="qa-a"><ul><li>Quick Sort is in-place — does NOT use extra array</li><li>But it uses <strong>O(log n)</strong> space for the recursive call stack (average case)</li><li>Worst case stack depth: O(n) — when always unbalanced (already sorted + last pivot)</li><li>Compare: Merge Sort uses O(n) extra space for temp arrays + O(log n) stack</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q10</span> What are the three steps of Divide and Conquer?</div><div class="qa-a"><ul><li><strong>1. Divide</strong> – Break problem into a smaller subproblems of size n/b</li><li><strong>2. Conquer</strong> – Recursively solve each subproblem (base case: solve directly)</li><li><strong>3. Combine</strong> – Merge/combine solutions to subproblems to get overall solution</li><li>Example: Merge Sort — Divide array, sort halves, Merge sorted halves</li><li>Binary Search has no combine step (only one subproblem to recurse on)</li></ul></div></div>
+    </div>
+
+    <!-- ── Decrease & Conquer 2-Mark ── -->
+    <div class="tab-content" id="tab-dec">
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q1</span> Differentiate Divide and Conquer from Decrease and Conquer.</div><div class="qa-a"><ul><li><strong>Divide &amp; Conquer</strong>: Splits into a ≥ 2 subproblems; solutions combined. Example: Merge Sort</li><li><strong>Decrease &amp; Conquer</strong>: Reduces to ONE smaller subproblem; no combine needed. Example: Insertion Sort</li><li>D&amp;C recurrence: T(n) = aT(n/b)+f(n). Dec&amp;Conq: T(n) = T(n–1) + f(n)</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q2</span> Why is Insertion Sort a Decrease-and-Conquer algorithm?</div><div class="qa-a"><ul><li>To sort n elements: <strong>first solve for n–1 elements</strong> (same smaller problem), then insert nth</li><li>Problem size decreases by 1 each step → "decrease by constant"</li><li>No combine step needed — just insert into correct position</li><li>Recurrence: T(n) = T(n–1) + n → Θ(n²)</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q3</span> What is topological sorting? On what type of graph?</div><div class="qa-a"><ul><li>Linear ordering of vertices of a <strong>DAG (Directed Acyclic Graph)</strong> such that for every edge u→v, u appears before v</li><li>Exists only for DAGs — if cycle present, no topological order</li><li>Multiple valid orderings may exist</li><li>Applications: task scheduling, course prerequisites, build systems</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q4</span> What is the time complexity of Insertion Sort? Best and worst case?</div><div class="qa-a"><ul><li><strong>Best case: O(n)</strong> — Input already sorted; inner while loop never executes</li><li><strong>Worst case: O(n²)</strong> — Input reverse sorted; maximum shifting at each step</li><li><strong>Average case: O(n²)</strong></li><li>Basic operation: comparison A[j] > key</li><li>Space: O(1) — in-place, stable</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q5</span> What is the time complexity of topological sort?</div><div class="qa-a"><ul><li><strong>O(V + E)</strong> — same as DFS/BFS</li><li>V = vertices visited once each → O(V)</li><li>E = each edge processed once → O(E)</li><li>Source removal method: computing in-degrees O(V+E) + V removals = O(V+E)</li><li>DFS method: DFS itself is O(V+E)</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q6</span> What are the three types of Decrease and Conquer?</div><div class="qa-a"><ul><li><strong>Decrease by constant (by 1)</strong>: Problem size reduces by 1 each step. Example: Insertion Sort (n → n–1), Factorial recursion</li><li><strong>Decrease by constant factor</strong>: Size reduces by factor b. Example: Binary Search (n → n/2)</li><li><strong>Variable decrease</strong>: Reduction amount varies. Example: Euclid's GCD algorithm</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q7</span> Trace one pass of Insertion Sort on [8, 4, 23, 42, 16].</div><div class="qa-a"><ul><li>i=1, key=4: Compare 4 &lt; 8 → shift 8 right → [4, 8, 23, 42, 16]</li><li>i=2, key=23: 23 > 8, stop → [4, 8, 23, 42, 16]</li><li>i=3, key=42: 42 > 23, stop → [4, 8, 23, 42, 16]</li><li>i=4, key=16: 16 &lt; 42 → shift. 16 &lt; 23 → shift. 16 > 8, stop → [4, 8, 16, 23, 42]</li><li>Final sorted: <strong>[4, 8, 16, 23, 42]</strong></li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q8</span> What is an in-degree in a graph? Why is it used in topological sort?</div><div class="qa-a"><ul><li><strong>In-degree</strong> of vertex v = number of incoming edges to v</li><li>A vertex with in-degree 0 has no prerequisites → can be placed first in topological order</li><li>Source removal algorithm: repeatedly remove vertices with in-degree 0</li><li>After removing a vertex, update in-degrees of its neighbors</li><li>If any vertex still has in-degree > 0 at end → cycle exists → no topological sort</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q9</span> What happens when topological sort is applied to a graph with a cycle?</div><div class="qa-a"><ul><li>Topological sort <strong>fails</strong> — no valid topological ordering exists</li><li>In source-removal method: at some point, no vertex has in-degree 0 — algorithm gets stuck</li><li>In DFS method: a back edge is detected → indicates a cycle</li><li>This can be used to <strong>detect cycles</strong> in directed graphs</li><li>Topological sort is only defined for <strong>DAGs</strong> (Directed Acyclic Graphs)</li></ul></div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num">Q10</span> Why is Insertion Sort better than Bubble Sort for nearly sorted arrays?</div><div class="qa-a"><ul><li>For nearly sorted input, Insertion Sort's inner while loop runs very few times (few shifts)</li><li>Best case: O(n) — only n–1 comparisons, 0 shifts</li><li>Bubble Sort with flag: also O(n) best case, but involves more unnecessary comparisons</li><li>Insertion Sort is <strong>online</strong> (can sort as data arrives) and adaptive</li><li>Used in practice for small n or as base case in Merge/Quick Sort (TimSort uses it for n ≤ 32)</li></ul></div></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- EXAM BOOSTER — 4-MARK QUESTIONS -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="page" id="page-q4mark">
+  <div class="content-header">
+    <div class="breadcrumb">Home → Exam Booster → <span>4-Mark Questions</span></div>
+    <div class="content-title">4-Mark Questions &amp; Key Points</div>
+  </div>
+  <div class="content-body">
+
+    <div class="topic-section">
+      <div class="topic-h2" style="color:var(--blue)">Module 1 — 4-Mark Questions</div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num mark4">Q1</span> State and explain the three asymptotic notations with formal definitions and examples.</div><div class="qa-a"><strong>Answer framework (write for 4 marks):</strong><br><br>1. <strong>Big-O [Upper Bound]:</strong> f(n) ∈ O(g(n)) iff ∃ c>0, n₀ such that f(n) ≤ c·g(n) ∀n≥n₀. Example: 3n+5 ∈ O(n).<br><br>2. <strong>Omega [Lower Bound]:</strong> f(n) ∈ Ω(g(n)) iff ∃ c>0, n₀ such that f(n) ≥ c·g(n) ∀n≥n₀. Example: 3n+5 ∈ Ω(n).<br><br>3. <strong>Theta [Tight Bound]:</strong> f(n) ∈ Θ(g(n)) iff ∃ c₁,c₂>0, n₀ such that c₁·g(n) ≤ f(n) ≤ c₂·g(n). Example: 3n+5 ∈ Θ(n). Θ = O ∩ Ω.<br><br>Diagram showing the three bounds is worth 1 mark.</div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num mark4">Q2</span> Write Bubble Sort pseudocode. Trace it on [5, 3, 8, 4, 1]. Analyze its time complexity.</div><div class="qa-a"><strong>Pseudocode:</strong> (Write pseudocode as in notes)<br><br><strong>Trace on [5,3,8,4,1]:</strong><br>Pass 1: [3,5,4,1,8] (swaps: 5↔3, 8↔4, 8↔1)<br>Pass 2: [3,4,1,5,8] <br>Pass 3: [3,1,4,5,8]<br>Pass 4: [1,3,4,5,8] ✓<br><br><strong>Analysis:</strong> Basic op = comparison. Comparisons = (n-1)+(n-2)+...+1 = n(n-1)/2 ∈ Θ(n²). Space = O(1). Stable = Yes.</div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num mark4">Q3</span> Compare Bubble Sort and Selection Sort in detail.</div><div class="qa-a"><strong>Bubble Sort:</strong> Compares adjacent elements and swaps. O(n) best case (with flag), Θ(n²) worst. Stable. Number of swaps can be O(n²).<br><br><strong>Selection Sort:</strong> Finds minimum, places at front. Always Θ(n²) comparisons (input doesn't matter). NOT stable. At most O(n) swaps — advantage when writes are expensive.<br><br><strong>Table comparison:</strong> Stability | Bubble: Stable, Selection: Unstable. Swaps: Bubble: O(n²), Selection: O(n). Input sensitivity: Bubble: Yes (early exit), Selection: No.</div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num mark4">Q4</span> Solve the TSP for 4 cities with the given cost matrix using exhaustive search.</div><div class="qa-a"><strong>General approach (adapt to given matrix):</strong><br>Fix city 1. Enumerate (4-1)! = 6 tours (including reverses) = 3 distinct tours:<br>1→2→3→4→1, 1→2→4→3→1, 1→3→2→4→1<br>(+ 3 more reverses: but those cost same, so 3 unique)<br><br>Compute cost for each tour using given matrix. Return tour with minimum total distance.<br><br><strong>Complexity:</strong> O((n-1)!) = O(3!) = O(6) for n=4.</div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num mark4">Q5</span> Explain brute force string matching with example. What is its time complexity?</div><div class="qa-a">Brute force string matching slides pattern P over text T one position at a time, comparing P with T[i..i+m-1].<br><br><strong>Example:</strong> T="ABCABDAB", P="ABD"<br>i=0: A=A, B=B, C≠D → fail. i=1: B≠A → fail. i=2: C≠A → fail. i=3: A=A, B=B, D=D → MATCH at position 3!<br><br><strong>Complexity:</strong> Best: O(n), Worst: O(n·m) when almost-matching pattern. Average for random text: O(n).</div></div>
+    </div>
+
+    <div class="topic-section">
+      <div class="topic-h2" style="color:var(--blue)">Module 2 — 4-Mark Questions</div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num mark4">Q6</span> State Master's Theorem. Solve T(n) = 4T(n/2) + n using it.</div><div class="qa-a"><strong>Master's Theorem:</strong> For T(n)=aT(n/b)+f(n), let p=log_b(a).<br>Case 1: f(n)=O(nᵖ⁻ᵉ) → T(n)=Θ(nᵖ)<br>Case 2: f(n)=Θ(nᵖ) → T(n)=Θ(nᵖ log n)<br>Case 3: f(n)=Ω(nᵖ⁺ᵉ) + regularity → T(n)=Θ(f(n))<br><br><strong>Solving T(n)=4T(n/2)+n:</strong><br>a=4, b=2, p=log₂(4)=2, nᵖ=n²<br>f(n)=n = O(n²⁻¹) = O(nᵖ⁻¹) → Case 1<br>∴ T(n) = Θ(n²)</div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num mark4">Q7</span> Write Merge Sort pseudocode. Trace it on [38, 27, 43, 3, 9].</div><div class="qa-a"><strong>Pseudocode:</strong> (as in notes)<br><br><strong>Trace:</strong><br>[38,27,43,3,9]<br>→ Split: [38,27,43] and [3,9]<br>→ [38,27,43]: Split [38],[27,43]<br>→ [27,43]: Split [27],[43] → Merge→[27,43]<br>→ Merge [38],[27,43] → [27,38,43]<br>→ [3,9]: Split [3],[9] → Merge → [3,9]<br>→ Final merge [27,38,43] + [3,9] → [3,9,27,38,43] ✓<br><br><strong>Complexity:</strong> Θ(n log n) always.</div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num mark4">Q8</span> Trace Quick Sort on [5, 3, 8, 4, 2] using last element as pivot.</div><div class="qa-a">Initial: [5,3,8,4,2], pivot=2<br>Partition: 2 < all → pivot goes to index 0 → [2,3,8,4,5]<br>Left: [] (empty), Right: [3,8,4,5], pivot=5<br>Partition right: 3<5, 4<5, 8>5 → [3,4,5,8]<br>Recursively: [3,4] with pivot=4<br>Partition: 3<4 → [3,4]. Done.<br><br>Final: [2,3,4,5,8] ✓<br><br><strong>Complexity:</strong> Best/Avg=O(nlogn), Worst=O(n²)</div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num mark4">Q9</span> Compare Merge Sort and Quick Sort comprehensively.</div><div class="qa-a">Write comparison table covering: Time complexity (best/avg/worst), Space complexity, Stability, In-place or not, Pivot/split method, Preferred use case.<br><br>Key: Merge=Θ(nlogn) always, O(n) space, Stable. Quick=O(nlogn) avg, O(n²) worst, O(logn) space, Not stable.<br>Use Merge Sort when: stability needed, linked lists, guaranteed performance. Use Quick Sort when: average performance matters, in-place needed, arrays.</div></div>
+
+      <div class="qa-box"><div class="qa-q" onclick="toggleAns(this)"><span class="q-num mark4">Q10</span> Perform topological sort on a given DAG using source removal method.</div><div class="qa-a"><strong>Algorithm:</strong> Repeatedly find vertex with in-degree 0 (source), add to result, remove from graph and update in-degrees. Repeat until graph is empty.<br><br><strong>Example on graph: A→B, A→C, B→D, C→D, D→E:</strong><br>Step 1: In-degrees: A=0,B=1,C=1,D=2,E=1. Remove A → [A]<br>Step 2: B=0,C=0. Remove B → [A,B]. Update D=1<br>Step 3: C=0. Remove C → [A,B,C]. Update D=0<br>Step 4: Remove D → [A,B,C,D]. Update E=0<br>Step 5: Remove E → [A,B,C,D,E]. ✓<br>Time: O(V+E)</div></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- EXAM BOOSTER — 10-MARK QUESTIONS -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="page" id="page-q10mark">
+  <div class="content-header">
+    <div class="breadcrumb">Home → Exam Booster → <span>10-Mark Questions</span></div>
+    <div class="content-title">10-Mark Questions &amp; Full Answers</div>
+  </div>
+  <div class="content-body">
+    <div class="explanation" style="border-left-color:var(--purple); margin-bottom:24px;">
+      📜 These are full 10-mark essay-style questions. Each answer is structured as a university examiner expects: <strong>Definition → Explanation → Algorithm/Pseudocode → Worked Example → Complexity Analysis</strong>. Click any question to expand the full model answer.
+    </div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab(this, 'ten-m1')">Module 1</button>
+      <button class="tab-btn" onclick="switchTab(this, 'ten-m2')">Module 2</button>
+    </div>
+
+    <!-- MODULE 1 — 10-MARK -->
+    <div class="tab-content active" id="ten-m1">
+
+      <div class="qa-box">
+        <div class="qa-q" onclick="toggleAns(this)"><span class="q-num mark10">Q1</span> Explain in detail the asymptotic notations Big-O, Omega, and Theta. State formal definitions, properties, and prove that 5n² + 3n ∈ Θ(n²). [10 marks]</div>
+        <div class="qa-a">
+          <span class="sub-head">1. Introduction (1 mark)</span>
+          <p>Asymptotic notations describe the growth rate of an algorithm's time/space complexity as input n → ∞. They classify algorithms by how their running time scales, ignoring constants and lower-order terms. The three main notations are Big-O, Omega, and Theta.</p>
+
+          <span class="sub-head">2. Big-O Notation — Upper Bound (2 marks)</span>
+          <p><strong>Definition:</strong> f(n) ∈ O(g(n)) iff ∃ positive constants c and n₀ such that <strong>f(n) ≤ c·g(n)</strong> for all n ≥ n₀.</p>
+          <ul>
+            <li>Gives the <strong>worst-case upper bound</strong> — algorithm takes at most this long</li>
+            <li>Example: 3n + 5 ∈ O(n). Choose c = 4, n₀ = 5. Then 3n+5 ≤ 4n ∀n ≥ 5 ✓</li>
+            <li>Not unique: 3n+5 ∈ O(n²) is also valid — just not tight</li>
+          </ul>
+
+          <span class="sub-head">3. Omega Notation — Lower Bound (2 marks)</span>
+          <p><strong>Definition:</strong> f(n) ∈ Ω(g(n)) iff ∃ positive constants c and n₀ such that <strong>f(n) ≥ c·g(n)</strong> for all n ≥ n₀.</p>
+          <ul>
+            <li>Gives the <strong>best-case lower bound</strong> — algorithm takes at least this long</li>
+            <li>Example: 5n² + 3n ∈ Ω(n²). Choose c = 5, n₀ = 1. Then 5n²+3n ≥ 5n² ∀n ≥ 1 ✓</li>
+          </ul>
+
+          <span class="sub-head">4. Theta Notation — Tight Bound (2 marks)</span>
+          <p><strong>Definition:</strong> f(n) ∈ Θ(g(n)) iff ∃ positive constants c₁, c₂, n₀ such that <strong>c₁·g(n) ≤ f(n) ≤ c₂·g(n)</strong> for all n ≥ n₀.</p>
+          <ul>
+            <li>Θ(g(n)) = O(g(n)) ∩ Ω(g(n)) — both upper and lower bound simultaneously</li>
+            <li>Most precise: f grows <em>exactly</em> at the rate of g</li>
+          </ul>
+
+          <span class="sub-head">5. Proof: 5n² + 3n ∈ Θ(n²) (2 marks)</span>
+          <p><strong>Need to find c₁, c₂, n₀ such that c₁·n² ≤ 5n² + 3n ≤ c₂·n²</strong></p>
+          <ul>
+            <li><strong>Upper bound:</strong> 5n² + 3n ≤ c₂·n² → 5 + 3/n ≤ c₂. For n ≥ 1: 5 + 3/n ≤ 8. Choose c₂ = 8, n₀ = 1 ✓</li>
+            <li><strong>Lower bound:</strong> c₁·n² ≤ 5n² + 3n. Choose c₁ = 5. Then 5n² ≤ 5n² + 3n ∀n ≥ 0 ✓</li>
+            <li>For <strong>c₁ = 5, c₂ = 8, n₀ = 1</strong>: 5n² ≤ 5n² + 3n ≤ 8n² ∀n ≥ 1</li>
+            <li>∴ <strong>5n² + 3n ∈ Θ(n²)</strong> ✓</li>
+          </ul>
+
+          <span class="sub-head">6. Summary Table (1 mark)</span>
+          <p>O: f ≤ c·g (upper). Ω: f ≥ c·g (lower). Θ: c₁·g ≤ f ≤ c₂·g (tight). Θ is used when we know exact growth rate. O used for worst case guarantees.</p>
+        </div>
+      </div>
+
+      <div class="qa-box">
+        <div class="qa-q" onclick="toggleAns(this)"><span class="q-num mark10">Q2</span> Explain Bubble Sort and Selection Sort with pseudocode, trace on [64, 25, 12, 22, 11], and analyze time/space complexity. Compare the two algorithms. [10 marks]</div>
+        <div class="qa-a">
+          <span class="sub-head">BUBBLE SORT (5 marks)</span>
+          <p><strong>Concept:</strong> Repeatedly compare adjacent elements and swap if out of order. After each pass, the largest element "bubbles" to its correct final position.</p>
+          <p><strong>Pseudocode:</strong></p>
+          <p>BubbleSort(A[0..n-1]):<br>
+          &nbsp;&nbsp;for i = 0 to n-2:<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;for j = 0 to n-2-i:<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if A[j] &gt; A[j+1]: swap(A[j], A[j+1])</p>
+          <p><strong>Trace on [64, 25, 12, 22, 11]:</strong></p>
+          <ul>
+            <li>Pass 1: [25,12,22,11,<strong>64</strong>]</li>
+            <li>Pass 2: [12,22,11,<strong>25</strong>,64]</li>
+            <li>Pass 3: [12,11,<strong>22</strong>,25,64]</li>
+            <li>Pass 4: [<strong>11</strong>,12,22,25,64] ✓</li>
+          </ul>
+          <p><strong>Complexity:</strong> Comparisons = n(n–1)/2 ∈ Θ(n²). Space = O(1). Stable = Yes. Best case O(n) with early-exit flag.</p>
+
+          <span class="sub-head">SELECTION SORT (3 marks)</span>
+          <p><strong>Concept:</strong> Find the minimum element in the unsorted part and swap it to the front.</p>
+          <p><strong>Pseudocode:</strong></p>
+          <p>SelectionSort(A[0..n-1]):<br>
+          &nbsp;&nbsp;for i = 0 to n-2:<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;min_idx = i<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;for j = i+1 to n-1: if A[j] &lt; A[min_idx]: min_idx = j<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;swap(A[i], A[min_idx])</p>
+          <p><strong>Trace on [64,25,12,22,11]:</strong> [11,25,12,22,64] → [11,12,25,22,64] → [11,12,22,25,64] → [11,12,22,25,64] ✓</p>
+          <p><strong>Complexity:</strong> Always Θ(n²). At most n–1 swaps. Space = O(1). NOT stable.</p>
+
+          <span class="sub-head">COMPARISON TABLE (2 marks)</span>
+          <ul>
+            <li><strong>Stability:</strong> Bubble = Stable, Selection = NOT stable</li>
+            <li><strong>Swaps:</strong> Bubble = O(n²) worst, Selection = O(n) always</li>
+            <li><strong>Best case:</strong> Bubble = O(n), Selection = Θ(n²)</li>
+            <li><strong>Adaptive:</strong> Bubble = Yes (with flag), Selection = No</li>
+            <li><strong>Use when:</strong> Bubble → need stability, small data. Selection → minimize writes</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="qa-box">
+        <div class="qa-q" onclick="toggleAns(this)"><span class="q-num mark10">Q3</span> What is brute force string matching? Explain with algorithm and example. What are its limitations? Compare with better approaches. [10 marks]</div>
+        <div class="qa-a">
+          <span class="sub-head">1. Definition (1 mark)</span>
+          <p>Brute force string matching: Given text T[0..n-1] and pattern P[0..m-1], check every possible starting position i in T (from 0 to n–m) to see if P occurs there. Also called the "naive" string matching algorithm.</p>
+
+          <span class="sub-head">2. Algorithm / Pseudocode (2 marks)</span>
+          <p>BruteForceStringMatch(T[0..n-1], P[0..m-1]):<br>
+          &nbsp;&nbsp;for i = 0 to n–m:<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;j = 0<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;while j &lt; m and T[i+j] == P[j]: j++<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;if j == m: return i  // match found at i<br>
+          &nbsp;&nbsp;return –1  // no match</p>
+          <ul>
+            <li>Outer loop tries each of n–m+1 starting positions</li>
+            <li>Inner loop compares up to m characters</li>
+          </ul>
+
+          <span class="sub-head">3. Traced Example (2 marks)</span>
+          <p>T = "ABCABDABD", P = "ABD" (n=9, m=3)</p>
+          <ul>
+            <li>i=0: A=A, B=B, C≠D → fail</li>
+            <li>i=1: B≠A → fail</li>
+            <li>i=2: C≠A → fail</li>
+            <li>i=3: A=A, B=B, D=D → <strong>MATCH at position 3!</strong></li>
+          </ul>
+
+          <span class="sub-head">4. Complexity Analysis (2 marks)</span>
+          <ul>
+            <li><strong>Best case:</strong> O(m) — Match at first position, or mismatch on 1st char always</li>
+            <li><strong>Worst case:</strong> O((n–m+1)·m) ≈ O(n·m)</li>
+            <li>Worst case example: T = "aaaaa...a" (n a's), P = "aaa...ab" (m–1 a's + 1 b)</li>
+            <li>At every position: m–1 matches then failure → O(n·m) total</li>
+            <li><strong>Average case (random text):</strong> O(n)</li>
+          </ul>
+
+          <span class="sub-head">5. Limitations (1 mark)</span>
+          <ul>
+            <li>No learning from previous comparisons — no memory of past matches</li>
+            <li>Redundant comparisons — shifts back on every mismatch</li>
+            <li>Inefficient for large texts or large patterns</li>
+          </ul>
+
+          <span class="sub-head">6. Better Algorithms (2 marks)</span>
+          <ul>
+            <li><strong>KMP (Knuth-Morris-Pratt):</strong> O(n+m) — uses failure function to avoid redundant comparisons</li>
+            <li><strong>Boyer-Moore:</strong> O(n/m) best case — scans right to left, skips large chunks</li>
+            <li><strong>Rabin-Karp:</strong> O(n+m) average — uses hashing for fast match checking</li>
+            <li>Brute force is still used for short patterns or small n due to simplicity</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="qa-box">
+        <div class="qa-q" onclick="toggleAns(this)"><span class="q-num mark10">Q4</span> Explain the Travelling Salesperson Problem (TSP). Solve the given 4-city cost matrix using exhaustive search. Discuss its complexity and why it is NP-Hard. [10 marks]</div>
+        <div class="qa-a">
+          <span class="sub-head">1. Problem Definition (2 marks)</span>
+          <p><strong>TSP:</strong> Given n cities and the cost/distance between every pair of cities (complete weighted graph), find the <strong>minimum cost Hamiltonian cycle</strong> — a tour that starts at one city, visits every other city exactly once, and returns to the starting city.</p>
+          <ul>
+            <li><strong>Optimization version:</strong> Find minimum cost tour</li>
+            <li><strong>Decision version:</strong> Is there a tour of cost ≤ k?</li>
+          </ul>
+
+          <span class="sub-head">2. Exhaustive Search Approach (2 marks)</span>
+          <ul>
+            <li>Fix city 1 as start (to eliminate rotations)</li>
+            <li>Enumerate all (n–1)! permutations of remaining cities</li>
+            <li>Compute cost of each tour</li>
+            <li>Return the minimum cost tour</li>
+          </ul>
+
+          <span class="sub-head">3. Solved Example — 4 City Matrix (3 marks)</span>
+          <p>Cost matrix (∞ means no direct edge, use given values):</p>
+          <ul>
+            <li>Cities: 1, 2, 3, 4. Fix city 1. Enumerate (4–1)! = 6 tours:</li>
+            <li>Tour 1→2→3→4→1: cost = d(1,2)+d(2,3)+d(3,4)+d(4,1)</li>
+            <li>Tour 1→2→4→3→1: cost = d(1,2)+d(2,4)+d(4,3)+d(3,1)</li>
+            <li>Tour 1→3→2→4→1: cost = d(1,3)+d(3,2)+d(2,4)+d(4,1)</li>
+            <li>Tour 1→3→4→2→1: cost = d(1,3)+d(3,4)+d(4,2)+d(2,1)</li>
+            <li>Tour 1→4→2→3→1: cost = d(1,4)+d(4,2)+d(2,3)+d(3,1)</li>
+            <li>Tour 1→4→3→2→1: cost = d(1,4)+d(4,3)+d(3,2)+d(2,1)</li>
+            <li><strong>Select tour with minimum total cost as the answer</strong></li>
+          </ul>
+
+          <span class="sub-head">4. Complexity Analysis (2 marks)</span>
+          <ul>
+            <li>Number of tours = (n–1)!/2 (after removing reverse duplicates)</li>
+            <li>Time: <strong>O(n!)</strong> — factorial growth</li>
+            <li>n=10: 9!/2 = 181,440. n=20: 19! ≈ 6 × 10¹⁷ — impossible!</li>
+            <li>Space: O(n) to store current tour</li>
+          </ul>
+
+          <span class="sub-head">5. Why NP-Hard? (1 mark)</span>
+          <ul>
+            <li>No polynomial-time algorithm known for exact TSP</li>
+            <li>Even checking if a given solution is optimal requires knowing all other solutions</li>
+            <li>Every improvement attempts lead to exponential algorithms in worst case</li>
+            <li>Real solutions: approximation algorithms (Christofides: 1.5×), heuristics (nearest neighbor), dynamic programming (O(2ⁿ·n) — Held-Karp)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="qa-box">
+        <div class="qa-q" onclick="toggleAns(this)"><span class="q-num mark10">Q5</span> Write a detailed note on mathematical analysis of non-recursive algorithms. Explain the general framework with examples including Selection Sort and Matrix Multiplication. [10 marks]</div>
+        <div class="qa-a">
+          <span class="sub-head">1. Framework for Non-Recursive Analysis (2 marks)</span>
+          <p>Steps to analyze a non-recursive algorithm:</p>
+          <ul>
+            <li><strong>Step 1:</strong> Decide on a parameter (n) indicating input size</li>
+            <li><strong>Step 2:</strong> Identify the basic operation (most frequently executed)</li>
+            <li><strong>Step 3:</strong> Check if count varies for same-size inputs (→ worst/best/avg)</li>
+            <li><strong>Step 4:</strong> Set up a summation for the operation count</li>
+            <li><strong>Step 5:</strong> Find a closed-form solution using summation formulas</li>
+          </ul>
+
+          <span class="sub-head">2. Key Summation Formulas (2 marks)</span>
+          <ul>
+            <li>Σᵢ₌₁ⁿ 1 = n</li>
+            <li>Σᵢ₌₁ⁿ i = n(n+1)/2</li>
+            <li>Σᵢ₌₁ⁿ i² = n(n+1)(2n+1)/6</li>
+            <li>Σᵢ₌₀ⁿ aⁱ = (aⁿ⁺¹ – 1)/(a – 1)</li>
+          </ul>
+
+          <span class="sub-head">3. Example 1: Selection Sort (3 marks)</span>
+          <p>Algorithm: for i=0 to n-2: for j=i+1 to n-1: compare A[j] < A[min_idx]</p>
+          <ul>
+            <li>Basic operation: comparison A[j] &lt; A[min_idx]</li>
+            <li>Count = Σᵢ₌₀ⁿ⁻² Σⱼ₌ᵢ₊₁ⁿ⁻¹ 1 = Σᵢ₌₀ⁿ⁻² (n–1–i)</li>
+            <li>= (n–1) + (n–2) + ... + 1 = n(n–1)/2</li>
+            <li>n(n–1)/2 ∈ <strong>Θ(n²)</strong></li>
+          </ul>
+
+          <span class="sub-head">4. Example 2: Matrix Multiplication n×n (2 marks)</span>
+          <p>C[i][j] = Σₖ A[i][k] × B[k][j]</p>
+          <ul>
+            <li>Basic operation: multiplication A[i][k] × B[k][j]</li>
+            <li>Count = Σᵢ₌₁ⁿ Σⱼ₌₁ⁿ Σₖ₌₁ⁿ 1 = n × n × n = n³</li>
+            <li>Time complexity: <strong>Θ(n³)</strong></li>
+          </ul>
+
+          <span class="sub-head">5. Example 3: Finding Maximum (1 mark)</span>
+          <ul>
+            <li>Scan all n elements: basic op = comparison A[i] > max</li>
+            <li>Count = Σᵢ₌₁ⁿ⁻¹ 1 = n–1 ∈ <strong>Θ(n)</strong></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- MODULE 2 — 10-MARK -->
+    <div class="tab-content" id="ten-m2">
+
+      <div class="qa-box">
+        <div class="qa-q" onclick="toggleAns(this)"><span class="q-num mark10">Q6</span> State and explain Master's Theorem with all three cases. Apply it to solve: (i) T(n)=2T(n/2)+n, (ii) T(n)=4T(n/2)+n², (iii) T(n)=4T(n/2)+n³. [10 marks]</div>
+        <div class="qa-a">
+          <span class="sub-head">1. Master's Theorem — Statement (2 marks)</span>
+          <p>Given recurrence: <strong>T(n) = aT(n/b) + f(n)</strong> where a ≥ 1, b > 1.</p>
+          <p>Let <strong>p = log_b(a)</strong>. Compare f(n) with nᵖ:</p>
+          <ul>
+            <li><strong>Case 1:</strong> f(n) = O(nᵖ⁻ᵉ) for some ε > 0 → T(n) = <strong>Θ(nᵖ)</strong> [leaves dominate]</li>
+            <li><strong>Case 2:</strong> f(n) = Θ(nᵖ) → T(n) = <strong>Θ(nᵖ log n)</strong> [all levels equal]</li>
+            <li><strong>Case 3:</strong> f(n) = Ω(nᵖ⁺ᵉ) AND a·f(n/b) ≤ c·f(n), c&lt;1 → T(n) = <strong>Θ(f(n))</strong> [root dominates]</li>
+          </ul>
+
+          <span class="sub-head">2. Application (i): T(n) = 2T(n/2) + n (2 marks)</span>
+          <ul>
+            <li>a = 2, b = 2, p = log₂(2) = <strong>1</strong>, so nᵖ = n</li>
+            <li>f(n) = n. Compare: f(n) = n = Θ(n) = Θ(nᵖ) → <strong>Case 2</strong></li>
+            <li>∴ T(n) = <strong>Θ(n log n)</strong></li>
+            <li>This is Merge Sort! ✓</li>
+          </ul>
+
+          <span class="sub-head">3. Application (ii): T(n) = 4T(n/2) + n² (2 marks)</span>
+          <ul>
+            <li>a = 4, b = 2, p = log₂(4) = <strong>2</strong>, so nᵖ = n²</li>
+            <li>f(n) = n². Compare: f(n) = n² = Θ(n²) = Θ(nᵖ) → <strong>Case 2</strong></li>
+            <li>∴ T(n) = <strong>Θ(n² log n)</strong></li>
+          </ul>
+
+          <span class="sub-head">4. Application (iii): T(n) = 4T(n/2) + n³ (2 marks)</span>
+          <ul>
+            <li>a = 4, b = 2, p = log₂(4) = <strong>2</strong>, so nᵖ = n²</li>
+            <li>f(n) = n³. Compare: n³ vs n² → n³ grows faster → f(n) = Ω(n²⁺¹) → ε = 1 → <strong>Case 3</strong></li>
+            <li>Regularity check: 4·f(n/2) = 4·(n/2)³ = n³/2 = (1/2)·n³ ≤ c·n³, c = 1/2 &lt; 1 ✓</li>
+            <li>∴ T(n) = <strong>Θ(n³)</strong></li>
+          </ul>
+
+          <span class="sub-head">5. Summary Table (2 marks)</span>
+          <ul>
+            <li>T(n)=2T(n/2)+1 → p=1, f(n)=1=O(n⁰)=Case 1 → Θ(n)</li>
+            <li>T(n)=T(n/2)+1 → p=0, f(n)=1=Θ(n⁰)=Case 2 → Θ(log n) [Binary Search]</li>
+            <li>T(n)=3T(n/3)+n → p=1, f(n)=n=Θ(n)=Case 2 → Θ(n log n)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="qa-box">
+        <div class="qa-q" onclick="toggleAns(this)"><span class="q-num mark10">Q7</span> Explain Merge Sort algorithm with pseudocode. Trace it on [38, 27, 43, 3, 9, 82, 10]. Analyze its time and space complexity. [10 marks]</div>
+        <div class="qa-a">
+          <span class="sub-head">1. Concept — Divide and Conquer Approach (1 mark)</span>
+          <p>Merge Sort uses the divide and conquer paradigm: <strong>Divide</strong> array into two halves → <strong>Conquer</strong> by recursively sorting each half → <strong>Combine</strong> by merging two sorted halves into one sorted array.</p>
+
+          <span class="sub-head">2. Pseudocode (3 marks)</span>
+          <p><strong>MergeSort(A, left, right):</strong><br>
+          &nbsp;&nbsp;if left &lt; right:<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;mid = (left + right) / 2<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;MergeSort(A, left, mid)<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;MergeSort(A, mid+1, right)<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;Merge(A, left, mid, right)</p>
+          <p><strong>Merge(A, left, mid, right):</strong><br>
+          &nbsp;&nbsp;Create temp arrays L = A[left..mid], R = A[mid+1..right]<br>
+          &nbsp;&nbsp;i = j = 0; k = left<br>
+          &nbsp;&nbsp;while i &lt; len(L) and j &lt; len(R):<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;if L[i] ≤ R[j]: A[k++] = L[i++] else: A[k++] = R[j++]<br>
+          &nbsp;&nbsp;Copy remaining of L and R into A</p>
+
+          <span class="sub-head">3. Trace on [38, 27, 43, 3, 9, 82, 10] (3 marks)</span>
+          <ul>
+            <li>Split: [38,27,43,3] | [9,82,10]</li>
+            <li>Left: [38,27,43,3] → [38,27] | [43,3]</li>
+            <li>[38,27] → [38] | [27] → Merge → [27,38]</li>
+            <li>[43,3] → [43] | [3] → Merge → [3,43]</li>
+            <li>Merge [27,38] + [3,43] → [3,27,38,43]</li>
+            <li>Right: [9,82,10] → [9] | [82,10]</li>
+            <li>[82,10] → Merge → [10,82]</li>
+            <li>Merge [9] + [10,82] → [9,10,82]</li>
+            <li>Final: Merge [3,27,38,43] + [9,10,82] → <strong>[3,9,10,27,38,43,82]</strong> ✓</li>
+          </ul>
+
+          <span class="sub-head">4. Complexity Analysis (2 marks)</span>
+          <ul>
+            <li>Recurrence: T(n) = 2T(n/2) + n</li>
+            <li>By Master's Theorem (Case 2): <strong>T(n) = Θ(n log n)</strong> for all cases</li>
+            <li>Space: O(n) auxiliary for temporary arrays</li>
+            <li>Depth of recursion: O(log n) levels</li>
+          </ul>
+
+          <span class="sub-head">5. Properties (1 mark)</span>
+          <ul>
+            <li>Stable ✓, NOT in-place (O(n) extra), Best for linked lists, Predictable performance</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="qa-box">
+        <div class="qa-q" onclick="toggleAns(this)"><span class="q-num mark10">Q8</span> Explain Quick Sort algorithm with pseudocode and Lomuto partition scheme. Trace on [5, 3, 8, 4, 2, 7, 1]. Analyze all three cases of complexity. [10 marks]</div>
+        <div class="qa-a">
+          <span class="sub-head">1. Concept (1 mark)</span>
+          <p>Quick Sort: Choose a pivot element. Partition array so all elements less than pivot are on left, greater on right. Pivot is then in its final sorted position. Recursively sort left and right parts. No combine step needed — in-place!</p>
+
+          <span class="sub-head">2. Pseudocode (3 marks)</span>
+          <p><strong>QuickSort(A, low, high):</strong><br>
+          &nbsp;&nbsp;if low &lt; high:<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;pivot_pos = Partition(A, low, high)<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;QuickSort(A, low, pivot_pos – 1)<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;QuickSort(A, pivot_pos + 1, high)</p>
+          <p><strong>Partition(A, low, high): [Lomuto scheme — pivot = A[high]</strong><br>
+          &nbsp;&nbsp;pivot = A[high]; i = low – 1<br>
+          &nbsp;&nbsp;for j = low to high – 1:<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;if A[j] ≤ pivot: i++; swap(A[i], A[j])<br>
+          &nbsp;&nbsp;swap(A[i+1], A[high])<br>
+          &nbsp;&nbsp;return i + 1</p>
+
+          <span class="sub-head">3. Trace on [5, 3, 8, 4, 2, 7, 1] (3 marks)</span>
+          <ul>
+            <li>Pivot = 1 (last element). After partition: <strong>[1, 3, 8, 4, 2, 7, 5]</strong>. Pivot at index 0.</li>
+            <li>Recurse on [3, 8, 4, 2, 7, 5], pivot = 5</li>
+            <li>After partition: [3, 4, 2, <strong>5</strong>, 7, 8]. Pivot at index 3 (relative to subarray)</li>
+            <li>Left: [3, 4, 2], pivot=2 → [2, 4, 3], pivot=2 at index 0. Recurse [4,3], pivot=3 → [3,4]. Done.</li>
+            <li>Right of 5: [7, 8], pivot=8 → [7, 8]. Done.</li>
+            <li>Final: <strong>[1, 2, 3, 4, 5, 7, 8]</strong> ✓</li>
+          </ul>
+
+          <span class="sub-head">4. Complexity Analysis (2 marks)</span>
+          <ul>
+            <li><strong>Best case:</strong> Pivot always splits array in half → T(n) = 2T(n/2) + n → <strong>O(n log n)</strong></li>
+            <li><strong>Average case:</strong> Random pivot → <strong>O(n log n)</strong></li>
+            <li><strong>Worst case:</strong> Pivot always smallest/largest (sorted input) → T(n) = T(n–1) + n → <strong>O(n²)</strong></li>
+            <li><strong>Space:</strong> O(log n) average for call stack; O(n) worst case</li>
+          </ul>
+
+          <span class="sub-head">5. Improvements (1 mark)</span>
+          <ul>
+            <li><strong>Randomized pivot:</strong> Pick random pivot → O(n log n) expected</li>
+            <li><strong>Median-of-three:</strong> Use median of A[low], A[mid], A[high] as pivot</li>
+            <li>Despite O(n²) worst case, Quick Sort is fastest in practice on average</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="qa-box">
+        <div class="qa-q" onclick="toggleAns(this)"><span class="q-num mark10">Q9</span> Explain Decrease and Conquer technique. Describe Insertion Sort and Topological Sorting with pseudocode, examples, and complexity analysis. [10 marks]</div>
+        <div class="qa-a">
+          <span class="sub-head">1. Decrease and Conquer — General Method (2 marks)</span>
+          <p>Decrease and Conquer reduces a problem of size n to a <strong>single</strong> problem of size n–1 (or n/b). Three variants:</p>
+          <ul>
+            <li><strong>Decrease by constant:</strong> Size reduces by fixed amount (usually 1). Example: Insertion Sort</li>
+            <li><strong>Decrease by factor:</strong> Size reduces by fixed ratio. Example: Binary Search (n → n/2)</li>
+            <li><strong>Variable decrease:</strong> Reduction varies. Example: Euclid's algorithm</li>
+          </ul>
+          <p>Key difference from D&amp;C: Only ONE subproblem, not multiple. No combine step.</p>
+
+          <span class="sub-head">2. Insertion Sort (4 marks)</span>
+          <p><strong>Idea:</strong> To sort n elements, assume first n–1 are sorted, then insert the nth into correct position.</p>
+          <p><strong>Pseudocode:</strong><br>
+          InsertionSort(A[0..n-1]):<br>
+          &nbsp;&nbsp;for i = 1 to n–1:<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;key = A[i]; j = i – 1<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;while j ≥ 0 and A[j] &gt; key: A[j+1] = A[j]; j--<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;A[j+1] = key</p>
+          <p><strong>Trace on [5, 2, 8, 1, 9]:</strong></p>
+          <ul>
+            <li>i=1: key=2. 5>2 → shift. → [2, 5, 8, 1, 9]</li>
+            <li>i=2: key=8. 5&lt;8, stop. → [2, 5, 8, 1, 9]</li>
+            <li>i=3: key=1. 8>1, 5>1, 2>1, stop. → [1, 2, 5, 8, 9]</li>
+            <li>i=4: key=9. 8&lt;9, stop. → <strong>[1, 2, 5, 8, 9]</strong> ✓</li>
+          </ul>
+          <p><strong>Complexity:</strong> Best=O(n), Worst=O(n²), Average=O(n²). Space=O(1). Stable=Yes. Adaptive=Yes.</p>
+
+          <span class="sub-head">3. Topological Sorting (4 marks)</span>
+          <p><strong>Definition:</strong> Linear ordering of vertices of a DAG such that for every edge u→v, u appears before v. Only exists for DAGs (no cycles).</p>
+          <p><strong>Source Removal Algorithm:</strong><br>
+          TopologicalSort(G):<br>
+          &nbsp;&nbsp;result = []; compute in-degrees for all vertices<br>
+          &nbsp;&nbsp;while G has vertices:<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;find vertex v with in-degree = 0<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;append v to result<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;remove v and its edges; update in-degrees<br>
+          &nbsp;&nbsp;return result</p>
+          <p><strong>Example:</strong> Graph: A→C, B→C, B→D, C→E, D→F, E→F</p>
+          <ul>
+            <li>In-degrees: A=0, B=0, C=2, D=1, E=1, F=2</li>
+            <li>Step 1: Remove A → in-degree C: 1. Order: [A]</li>
+            <li>Step 2: Remove B → in-degree C: 0, D: 0. Order: [A,B]</li>
+            <li>Step 3: Remove C → in-degree E: 0. Order: [A,B,C]</li>
+            <li>Step 4: Remove D → in-degree F: 1. Order: [A,B,C,D]</li>
+            <li>Step 5: Remove E → in-degree F: 0. Order: [A,B,C,D,E]</li>
+            <li>Step 6: Remove F. Final: <strong>[A,B,C,D,E,F]</strong> ✓</li>
+          </ul>
+          <p><strong>Complexity:</strong> O(V+E). Applications: Task scheduling, course prerequisites, compiler dependency resolution.</p>
+        </div>
+      </div>
+
+      <div class="qa-box">
+        <div class="qa-q" onclick="toggleAns(this)"><span class="q-num mark10">Q10</span> Compare and contrast all sorting algorithms studied: Bubble Sort, Selection Sort, Insertion Sort, Merge Sort, and Quick Sort. Discuss when to use each algorithm. [10 marks]</div>
+        <div class="qa-a">
+          <span class="sub-head">1. Brief Description of Each (2 marks)</span>
+          <ul>
+            <li><strong>Bubble Sort:</strong> Repeatedly swap adjacent elements; largest bubbles to end each pass</li>
+            <li><strong>Selection Sort:</strong> Find minimum, swap to front; minimize writes</li>
+            <li><strong>Insertion Sort:</strong> Build sorted array one element at a time by insertion</li>
+            <li><strong>Merge Sort:</strong> Divide in half, sort recursively, merge; always O(n log n)</li>
+            <li><strong>Quick Sort:</strong> Partition around pivot; fast in practice but O(n²) worst case</li>
+          </ul>
+
+          <span class="sub-head">2. Complete Complexity Comparison Table (3 marks)</span>
+          <ul>
+            <li><strong>Bubble:</strong> Best=O(n)*, Avg=Θ(n²), Worst=Θ(n²), Space=O(1), Stable=Yes, In-place=Yes</li>
+            <li><strong>Selection:</strong> Best=Θ(n²), Avg=Θ(n²), Worst=Θ(n²), Space=O(1), Stable=No, In-place=Yes</li>
+            <li><strong>Insertion:</strong> Best=O(n), Avg=O(n²), Worst=O(n²), Space=O(1), Stable=Yes, In-place=Yes</li>
+            <li><strong>Merge:</strong> Best=Θ(nlogn), Avg=Θ(nlogn), Worst=Θ(nlogn), Space=O(n), Stable=Yes, In-place=No</li>
+            <li><strong>Quick:</strong> Best=O(nlogn), Avg=O(nlogn), Worst=O(n²), Space=O(logn), Stable=No, In-place=Yes</li>
+          </ul>
+          <p>*Bubble Sort best case O(n) requires early-exit flag implementation</p>
+
+          <span class="sub-head">3. Key Differences (2 marks)</span>
+          <ul>
+            <li><strong>Stability:</strong> Bubble, Insertion, Merge = Stable. Selection, Quick = NOT stable</li>
+            <li><strong>Space:</strong> Merge = O(n) extra. Others = O(1) (Quick needs O(log n) for call stack)</li>
+            <li><strong>Predictability:</strong> Merge Sort always Θ(n log n). Quick Sort varies (O(n²) possible)</li>
+            <li><strong>Adaptivity:</strong> Insertion, Bubble (with flag) = adaptive. Others = not adaptive</li>
+          </ul>
+
+          <span class="sub-head">4. When to Use Each (2 marks)</span>
+          <ul>
+            <li><strong>Bubble Sort:</strong> Teaching/educational only. Almost never used in practice.</li>
+            <li><strong>Selection Sort:</strong> When memory writes are expensive (flash storage); small n</li>
+            <li><strong>Insertion Sort:</strong> Nearly sorted data; small arrays (n ≤ 20); online sorting; used in TimSort</li>
+            <li><strong>Merge Sort:</strong> Need guaranteed O(n log n); stability required; linked lists; external sorting</li>
+            <li><strong>Quick Sort:</strong> General-purpose in-place sorting on arrays; best average performance; used in most library sort functions</li>
+          </ul>
+
+          <span class="sub-head">5. Conclusion (1 mark)</span>
+          <p>For general use: <strong>Quick Sort</strong> (fast in practice). When stability matters: <strong>Merge Sort</strong>. For small/nearly-sorted data: <strong>Insertion Sort</strong>. Modern languages (Python, Java) use TimSort = Merge Sort + Insertion Sort hybrid for best practical performance.</p>
+        </div>
+      </div>
+
+      <div class="qa-box">
+        <div class="qa-q" onclick="toggleAns(this)"><span class="q-num mark10">Q11</span> Explain the Divide and Conquer strategy. Describe Binary Search with pseudocode, trace, and recurrence analysis. Prove its time complexity using backward substitution. [10 marks]</div>
+        <div class="qa-a">
+          <span class="sub-head">1. Divide and Conquer Strategy (2 marks)</span>
+          <p>Divide and Conquer works in three phases:</p>
+          <ul>
+            <li><strong>Divide:</strong> Split problem of size n into a subproblems of size n/b</li>
+            <li><strong>Conquer:</strong> Recursively solve each subproblem (base case: solve directly)</li>
+            <li><strong>Combine:</strong> Merge solutions of subproblems to get overall solution</li>
+          </ul>
+          <p>General recurrence: T(n) = aT(n/b) + f(n). Examples: Binary Search (a=1), Merge Sort (a=2), Strassen (a=7, b=2).</p>
+
+          <span class="sub-head">2. Binary Search — Definition (1 mark)</span>
+          <p>Efficiently search a <strong>sorted array</strong> by repeatedly comparing the target with the middle element and discarding the half that cannot contain the target. Each step eliminates half the remaining elements.</p>
+
+          <span class="sub-head">3. Pseudocode (2 marks)</span>
+          <p><strong>BinarySearch(A[0..n-1], key): [Iterative]</strong><br>
+          &nbsp;&nbsp;low = 0; high = n – 1<br>
+          &nbsp;&nbsp;while low ≤ high:<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;mid = (low + high) / 2<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;if A[mid] == key: return mid<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;elif A[mid] &lt; key: low = mid + 1<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;else: high = mid – 1<br>
+          &nbsp;&nbsp;return –1</p>
+
+          <span class="sub-head">4. Trace Example (2 marks)</span>
+          <p>Array A = [2, 5, 8, 12, 16, 23, 38, 56, 72, 91], key = 23</p>
+          <ul>
+            <li>low=0, high=9, mid=4: A[4]=16 &lt; 23 → low=5</li>
+            <li>low=5, high=9, mid=7: A[7]=56 &gt; 23 → high=6</li>
+            <li>low=5, high=6, mid=5: A[5]=23 == 23 → <strong>Return 5 ✓</strong></li>
+          </ul>
+
+          <span class="sub-head">5. Recurrence and Backward Substitution (2 marks)</span>
+          <ul>
+            <li>Recurrence: T(n) = T(n/2) + 1, T(1) = 1</li>
+            <li>T(n) = T(n/2) + 1</li>
+            <li>= T(n/4) + 1 + 1 = T(n/4) + 2</li>
+            <li>= T(n/8) + 3</li>
+            <li>= T(n/2ᵏ) + k</li>
+            <li>When n/2ᵏ = 1 → k = log₂n</li>
+            <li>T(n) = T(1) + log₂n = 1 + log₂n ∈ <strong>Θ(log n)</strong> ✓</li>
+          </ul>
+
+          <span class="sub-head">6. Properties (1 mark)</span>
+          <ul>
+            <li>Best: O(1). Worst/Avg: O(log n). Space: O(1) iterative, O(log n) recursive</li>
+            <li>Prerequisite: Array must be <strong>sorted</strong></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- EXAM BOOSTER — MOST REPEATED QUESTIONS -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="page" id="page-repeated">
+  <div class="content-header">
+    <div class="breadcrumb">Home → Exam Booster → <span>Most Repeated Questions</span></div>
+    <div class="content-title">🔥 15 Most Repeated Exam Questions</div>
+  </div>
+  <div class="content-body">
+
+    <div class="explanation" style="border-left-color:var(--red)">
+      ⚠️ These 15 questions have appeared repeatedly in university exams for Analysis of Algorithms. If you only have 30 minutes left before your exam, <strong>study only these</strong>. Know each answer cold.
+    </div>
+
+    <br>
+
+    <div class="hot-q">
+      <div class="hot-num">01</div>
+      <div class="hot-content">
+        <div class="hot-q-text">State and prove/apply Master's Theorem with all three cases. Solve T(n) = 2T(n/2) + n.</div>
+        <div class="hot-meta"><span class="hot-tag m2">Module 2</span><span class="hot-tag marks">4 Marks</span><span class="fire">🔥🔥🔥</span></div>
+      </div>
+    </div>
+
+    <div class="hot-q">
+      <div class="hot-num">02</div>
+      <div class="hot-content">
+        <div class="hot-q-text">Compare Merge Sort and Quick Sort — time complexity, space, stability, and use cases.</div>
+        <div class="hot-meta"><span class="hot-tag m2">Module 2</span><span class="hot-tag marks">4 Marks</span><span class="fire">🔥🔥🔥</span></div>
+      </div>
+    </div>
+
+    <div class="hot-q">
+      <div class="hot-num">03</div>
+      <div class="hot-content">
+        <div class="hot-q-text">Define Big-O, Omega, and Theta notation with formal definitions and examples. Prove 5n²+3n ∈ O(n²).</div>
+        <div class="hot-meta"><span class="hot-tag m1">Module 1</span><span class="hot-tag marks">4 Marks</span><span class="fire">🔥🔥🔥</span></div>
+      </div>
+    </div>
+
+    <div class="hot-q">
+      <div class="hot-num">04</div>
+      <div class="hot-content">
+        <div class="hot-q-text">Write the pseudocode for Merge Sort and trace it on a given array. Derive its recurrence and solve it.</div>
+        <div class="hot-meta"><span class="hot-tag m2">Module 2</span><span class="hot-tag marks">4-6 Marks</span><span class="fire">🔥🔥🔥</span></div>
+      </div>
+    </div>
+
+    <div class="hot-q">
+      <div class="hot-num">05</div>
+      <div class="hot-content">
+        <div class="hot-q-text">Trace Quick Sort on a given array using last element as pivot. Analyze its best, average, and worst case complexity.</div>
+        <div class="hot-meta"><span class="hot-tag m2">Module 2</span><span class="hot-tag marks">4 Marks</span><span class="fire">🔥🔥🔥</span></div>
+      </div>
+    </div>
+
+    <div class="hot-q">
+      <div class="hot-num">06</div>
+      <div class="hot-content">
+        <div class="hot-q-text">Perform topological sorting on a given DAG using source removal or DFS method. State its time complexity.</div>
+        <div class="hot-meta"><span class="hot-tag m2">Module 2</span><span class="hot-tag marks">4 Marks</span><span class="fire">🔥🔥</span></div>
+      </div>
+    </div>
+
+    <div class="hot-q">
+      <div class="hot-num">07</div>
+      <div class="hot-content">
+        <div class="hot-q-text">Solve the TSP problem for 4 cities using exhaustive search. How many tours are evaluated?</div>
+        <div class="hot-meta"><span class="hot-tag m1">Module 1</span><span class="hot-tag marks">4 Marks</span><span class="fire">🔥🔥</span></div>
+      </div>
+    </div>
+
+    <div class="hot-q">
+      <div class="hot-num">08</div>
+      <div class="hot-content">
+        <div class="hot-q-text">What is Divide and Conquer? Write its general recurrence. List at least 3 algorithms based on this technique.</div>
+        <div class="hot-meta"><span class="hot-tag m2">Module 2</span><span class="hot-tag marks">2-4 Marks</span><span class="fire">🔥🔥</span></div>
+      </div>
+    </div>
+
+    <div class="hot-q">
+      <div class="hot-num">09</div>
+      <div class="hot-content">
+        <div class="hot-q-text">Trace Binary Search on a sorted array for a given key. Derive T(n) = T(n/2) + 1 and solve it.</div>
+        <div class="hot-meta"><span class="hot-tag m2">Module 2</span><span class="hot-tag marks">4 Marks</span><span class="fire">🔥🔥</span></div>
+      </div>
+    </div>
+
+    <div class="hot-q">
+      <div class="hot-num">10</div>
+      <div class="hot-content">
+        <div class="hot-q-text">Write Bubble Sort pseudocode and analyze its time complexity using summation formula. Is Bubble Sort stable?</div>
+        <div class="hot-meta"><span class="hot-tag m1">Module 1</span><span class="hot-tag marks">4 Marks</span><span class="fire">🔥🔥</span></div>
+      </div>
+    </div>
+
+    <div class="hot-q">
+      <div class="hot-num">11</div>
+      <div class="hot-content">
+        <div class="hot-q-text">List the basic efficiency classes from best to worst. Give one algorithm for each class.</div>
+        <div class="hot-meta"><span class="hot-tag m1">Module 1</span><span class="hot-tag marks">2 Marks</span><span class="fire">🔥🔥</span></div>
+      </div>
+    </div>
+
+    <div class="hot-q">
+      <div class="hot-num">12</div>
+      <div class="hot-content">
+        <div class="hot-q-text">Trace Insertion Sort on [8, 4, 23, 42, 16, 15]. Analyze its best and worst case complexity.</div>
+        <div class="hot-meta"><span class="hot-tag m2">Module 2</span><span class="hot-tag marks">4 Marks</span><span class="fire">🔥🔥</span></div>
+      </div>
+    </div>
+
+    <div class="hot-q">
+      <div class="hot-num">13</div>
+      <div class="hot-content">
+        <div class="hot-q-text">Define algorithm. What are the five properties every algorithm must satisfy? Differentiate algorithm from program.</div>
+        <div class="hot-meta"><span class="hot-tag m1">Module 1</span><span class="hot-tag marks">2-4 Marks</span><span class="fire">🔥</span></div>
+      </div>
+    </div>
+
+    <div class="hot-q">
+      <div class="hot-num">14</div>
+      <div class="hot-content">
+        <div class="hot-q-text">Solve the 0/1 Knapsack problem for given items using exhaustive search (enumerate all subsets).</div>
+        <div class="hot-meta"><span class="hot-tag m1">Module 1</span><span class="hot-tag marks">4 Marks</span><span class="fire">🔥</span></div>
+      </div>
+    </div>
+
+    <div class="hot-q">
+      <div class="hot-num">15</div>
+      <div class="hot-content">
+        <div class="hot-q-text">Compare Decrease-and-Conquer with Divide-and-Conquer. Why is Insertion Sort a Decrease-and-Conquer algorithm?</div>
+        <div class="hot-meta"><span class="hot-tag m2">Module 2</span><span class="hot-tag marks">4 Marks</span><span class="fire">🔥</span></div>
+      </div>
+    </div>
+
+    <br>
+    <div class="revision-box">
+      <div class="revision-box-title">⚡ Strategy for Exam Success</div>
+      <ul>
+        <li><strong>First 30 min:</strong> Read all 15 questions above and recall key points</li>
+        <li><strong>Always draw:</strong> Recursion tree, trace tables — examiners give marks for these</li>
+        <li><strong>Master's Theorem:</strong> Memorize all 3 cases — guaranteed to appear</li>
+        <li><strong>Complexity table:</strong> Memorize the sorting comparison table (Best/Avg/Worst/Space/Stable)</li>
+        <li><strong>For 4-mark questions:</strong> Definition (1) + Formula/pseudocode (1) + Example/trace (1) + Analysis (1)</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    // Update nav
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+      if(item.getAttribute('onclick') && item.getAttribute('onclick').includes("'" + id + "'")) {
+        item.classList.add('active');
+      }
+    });
+    document.getElementById('main').scrollTop = 0;
+    window.scrollTo(0,0);
+    // Close sidebar on mobile
+    if(window.innerWidth < 900) {
+      document.getElementById('sidebar').classList.remove('open');
+    }
+  }
+
+  function toggleAns(el) {
+    const ans = el.nextElementSibling;
+    ans.classList.toggle('open');
+  }
+
+  function switchTab(btn, tabId) {
+    btn.closest('.content-body').querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.closest('.content-body').querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(tabId).classList.add('active');
+  }
+
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+</script>
+</body>
+</html>
